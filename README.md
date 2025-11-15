@@ -4,7 +4,7 @@
 - クラスの宣言では，**パスカルケース**を用いてください. <br>
   e.g. `class MapPin():`
 - HTMLリクエストを指定する際, `POST` / `GET` を用いてください. `post` / `get` は使用しないでください.
-- HTMLファイル名やviews.pyで宣言される関数は**スネークケース**を用いてください．また，これらの末尾は"`_view`としてください.  <br>
+- HTMLファイル名やviews.pyで宣言される関数は**スネークケース**を用いてください．また，これらの末尾は`_view`としてください.  <br>
   e.g. `map_view.html`, `get_stamp_view.html` etc.
 
 # GitHubの使い方
