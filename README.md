@@ -23,13 +23,10 @@
 ## クローン
 WSLで任意のディレクトリに移動して，コマンドを実行.
 ```
-$ git clone https://github.com/N-Ruma/StampCollection.git
+$ git clone -b develop https://github.com/N-Ruma/StampCollection.git
 ```
 > [!NOTE]
-> `-b`オプションで任意のブランチからクローンできる. デフォルトは`develop`.
-> ```
-> $ git clone -b main https://github.com/N-Ruma/StampCollection.git
-> ```
+> `-b`オプションで任意のブランチからクローンできる. デフォルトは`release`
 
 ## Docker
 vscodeでwslを開き，"フォルダを開く"から, `StampCollection/`を選択. (`.git/`があるところ.) <br>
