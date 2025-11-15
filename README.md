@@ -7,6 +7,8 @@
 - HTMLファイル名やviews.pyで宣言される関数は**スネークケース**を用いてください．また，これらの末尾は`_view`としてください.  <br>
   e.g. `map_view.html`, `get_stamp_view.html` etc.
 
+
+
 # GitHubの使い方
 > [!IMPORTANT]
 > 前提
@@ -93,3 +95,11 @@ $ git push -u origin feature/<FEATURE>
 1. 作業内容などを記入して，右の`Reviewers`から，レビュアーを1人以上選択. (マージしていいかを確認してもらうため.)
 1. `Create Pull request`をクリック
 1. Approveをもらったら，`Merge pull request`をクリックして，マージする.
+
+
+
+# ローカルリポジトリの内容をリモートリポジトリの内容で更新する方法
+リモートリポジトリの内容を，**現在のブランチ(`$ git branch`)**に統合する場合:
+```
+$ git pull origin <REMOTE_BRANCH_NAME>
+```
