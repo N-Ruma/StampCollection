@@ -17,7 +17,7 @@
 > ```
 > $ git --version # 確認
 > $ sudo apt update
-> $ sudo apt git # インストール
+> $ sudo apt install git # インストール
 > ```
 
 ## クローン
