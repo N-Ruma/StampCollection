@@ -7,8 +7,8 @@
 # GitHubの使い方!
 > [!IMPORTANT]
 > 前提
-> - vscodeの拡張機能で，"Dev Container"をインストールする.
-> - WSLに"git"をインストールする.
+> - vscodeの拡張機能で，`Dev Container`をインストールする.
+> - WSLに`git`をインストールする.
 > ```
 > $ git --version # 確認
 > $ sudo apt update
@@ -24,7 +24,7 @@ $ git clone -b develop https://github.com/N-Ruma/StampCollection.git
 > -bオプションで任意のブランチからクローンする. デフォルトはmain.
 
 ## Docker
-vscodeでwslを開き，"フォルダを開く"から, "StampCollection/"を選択. (".git/"があるところ.) <br>
+vscodeでwslを開き，"フォルダを開く"から, `StampCollection/`を選択. (`.git/`があるところ.) <br>
 開いたら，"コンテナで再度開く"を選択.
 
 ## ユーザ登録
@@ -46,7 +46,7 @@ $ git checkout -b feature/<FEATURE>
 ```
 > [!NOTE]
 > -bオプションでブランチの新規作成と移動を同時にできる. <br>
-> <FEATURE>には追加する機能や修正する点などを入れるとわかりやすくていい.
+> <FEATURE>には追加する機能や修正する点などを入れるとわかりやすくていい. <br>
 > e.g.
 > ```
 > $ git checkout -b feature/add_map_view
@@ -77,7 +77,9 @@ $ git commit -m "<COMMIT_MESSAGE>"
 > で変更.
 
 ## プッシュ
+```
 $ git push -u origin feature/<FEATURE>
+```
 
 ## プルリクエスト
 1\. リポジトリにアクセス <br>
