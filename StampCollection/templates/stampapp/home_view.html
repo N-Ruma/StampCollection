@@ -16,8 +16,6 @@
 {% endblock content %}
 
 {% block redirect %}
-<p><a href="{% url 'google_map' %}">Google Map Test</a></p>
-<p><a href="{% url 'leafret_map' %}">Leafret</a></p>
 {% if user.is_authenticated %}
 <form method="POST" action="{% url 'logout' %}">
   {% csrf_token %}
