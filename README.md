@@ -93,4 +93,3 @@ $ git push -u origin feature/<FEATURE>
 1. 作業内容などを記入して，右の`Reviewers`から，レビュアーを1人以上選択. (マージしていいかを確認してもらうため.)
 1. `Create Pull request`をクリック
 1. Approveをもらったら，`Merge pull request`をクリックして，マージする.
-2. 
