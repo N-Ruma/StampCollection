@@ -58,6 +58,7 @@ $ git checkout -b feature/<FEATURE>
 > ```
 
 ## ファイルを編集・追加する
+ファイルいじいじ.
 
 ## ステージング
 ```
