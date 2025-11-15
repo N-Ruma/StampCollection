@@ -5,16 +5,15 @@
 - HTMLファイル名やviews.pyで宣言される関数は**スネークケース**を用いてください．また，これらの末尾は"_view"としてください. e.g. "map_view.html", "get_stamp_view.html" etc.
 
 # GitHubの使い方!
-:::note warn
-前提
-- vscodeの拡張機能で，"Dev Container"をインストールする.
-- WSLに"git"をインストールする.
-```
-$ git --version # 確認
-$ sudo apt update
-$ sudo apt git # インストール
-```
-:::
+> [!IMPORTANT]
+> 前提
+> - vscodeの拡張機能で，"Dev Container"をインストールする.
+> - WSLに"git"をインストールする.
+> ```
+> $ git --version # 確認
+> $ sudo apt update
+> $ sudo apt git # インストール
+> ```
 
 ## クローン
 WSLで任意のディレクトリに移動して，コマンドを実行.
