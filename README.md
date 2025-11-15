@@ -1,8 +1,11 @@
 # コーディング規則
-- 関数の宣言では，**スネークケース**を用いてください.  e.g. "def map_view():", "def stamp_list_view():"
-- クラスの宣言では，**パスカルケース**を用いてください. e.g. "class MapPin():"
-- HTMLリクエストを指定する際, "POST" / "GET" を用いてください. "post" / "get" は使用しないでください.
-- HTMLファイル名やviews.pyで宣言される関数は**スネークケース**を用いてください．また，これらの末尾は"_view"としてください. e.g. "map_view.html", "get_stamp_view.html" etc.
+- 関数の宣言では，**スネークケース**を用いてください. <br>
+  e.g. `def map_view():`, `def stamp_list_view():`
+- クラスの宣言では，**パスカルケース**を用いてください. <br>
+  e.g. `class MapPin():`
+- HTMLリクエストを指定する際, `POST` / `GET` を用いてください. `post` / `get` は使用しないでください.
+- HTMLファイル名やviews.pyで宣言される関数は**スネークケース**を用いてください．また，これらの末尾は"`_view`としてください.  <br>
+  e.g. `map_view.html`, `get_stamp_view.html` etc.
 
 # GitHubの使い方
 > [!IMPORTANT]
