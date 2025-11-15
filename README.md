@@ -58,7 +58,10 @@ $ git checkout -b feature/<FEATURE>
 > ```
 
 ## ファイルを編集・追加する
-ファイルいじいじ.
+ファイルを編集，追加などする. 
+> [!NOTE]
+> `myvenv/bin/activate`などをする必要はなく，はじめから`python manage.py runserver`を実行するので大丈夫.
+> ただし`.gitignore`の設定で，`db.sqlite3`や`migrantions/`ディレクトリをバージョン管理から除外しているので，最初に`makemigrations`と`migrate`を行う必要がある.
 
 ## ステージング
 ```
