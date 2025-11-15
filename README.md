@@ -99,7 +99,7 @@ $ git push -u origin feature/<FEATURE>
 
 
 # ローカルリポジトリの内容をリモートリポジトリの内容で更新する方法
-リモートリポジトリの内容を，**現在のブランチ(`$ git branch`)**に統合する場合:
+リモートリポジトリの内容を，**現在のブランチ**(`$ git branch`)に統合する場合:
 ```
 $ git pull origin <REMOTE_BRANCH_NAME>
 ```
