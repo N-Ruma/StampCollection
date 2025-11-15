@@ -3,7 +3,7 @@
   e.g. `def map_view():`, `def stamp_list_view():`
 - クラスの宣言では，**パスカルケース**を用いてください. <br>
   e.g. `class MapPin():`
-- HTMLリクエストを指定する際, `POST` / `GET` を用いてください. `post` / `get` は使用しないでください.
+- HTMLリクエストを指定する際, `POST` / `GET` を用いてください. `post` / `get` は使用しないでください. (小文字が交じると動かなくなったりするものがある(あった)ので，念の為.)
 - HTMLファイル名やviews.pyで宣言される関数は**スネークケース**を用いてください．また，これらの末尾は`_view`としてください.  <br>
   e.g. `map_view.html`, `get_stamp_view.html` etc.
 
