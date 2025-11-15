@@ -20,9 +20,8 @@ WSLで任意のディレクトリに移動して，コマンドを実行.
 ```
 $ git clone -b develop https://github.com/N-Ruma/StampCollection.git
 ```
-:::note info
--bオプションで任意のブランチからクローンする. デフォルトはmain.
-:::
+> [!NOTE]
+> -bオプションで任意のブランチからクローンする. デフォルトはmain.
 
 ## Docker
 vscodeでwslを開き，"フォルダを開く"から, "StampCollection/"を選択. (".git/"があるところ.)
@@ -34,25 +33,23 @@ vscodeでwslを開き，"フォルダを開く"から, "StampCollection/"を選�
 $ git config --local user.name <USERNAME>
 $ git config --local user.email <EMAIL>
 ```
-:::note info
-確認
-```
-$ git config --local user.name
-$ git config --local user.email
-```
-:::
+> [!NOTE]
+> 確認
+> ```
+> $ git config --local user.name
+> $ git config --local user.email
+> ```
 
 ## ブランチを切る
 ```
 $ git checkout -b feature/<FEATURE>
 ```
-:::note info
--bオプションでブランチの新規作成と移動を同時にできる. <FEATURE>には追加する機能や修正する点などを入れるとわかりやすくていい.
-e.g.
-```
-$ git checkout -b feature/add_map_view
-```
-:::
+> [!NOTE]
+> -bオプションでブランチの新規作成と移動を同時にできる. <FEATURE>には追加する機能や修正する点などを入れるとわかりやすくていい.
+> e.g.
+> ```
+> $ git checkout -b feature/add_map_view
+> ```
 
 ## ファイルを編集・追加する
 
@@ -60,9 +57,8 @@ $ git checkout -b feature/add_map_view
 ```
 $ git add .
 ```
-:::note info
-"."でカレントディレクトリ下のすべてのファイルをステージングする.
-:::
+> [!NOTE]
+> "."でカレントディレクトリ下のすべてのファイルをステージングする.
 
 ## コミット
 ```
@@ -71,13 +67,12 @@ $ git commit
 ```
 $ git commit -m "<COMMIT_MESSAGE>"
 ```
-:::note info
--mオプションを付けない場合, vimが起動する. 他のエディタを使いたい場合はそれをインストールして,
-```
-$ git config --global core.editor <EDITOR_NAME>
-```
-で変更.
-:::
+> [!NOTE]
+> -mオプションを付けない場合, vimが起動する. 他のエディタを使いたい場合はそれをインストールして,
+> ```
+> $ git config --global core.editor <EDITOR_NAME>
+> ```
+> で変更.
 
 ## プッシュ
 $ git push -u origin feature/<FEATURE>
