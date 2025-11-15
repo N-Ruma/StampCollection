@@ -4,7 +4,7 @@
 - HTMLリクエストを指定する際, "POST" / "GET" を用いてください. "post" / "get" は使用しないでください.
 - HTMLファイル名やviews.pyで宣言される関数は**スネークケース**を用いてください．また，これらの末尾は"_view"としてください. e.g. "map_view.html", "get_stamp_view.html" etc.
 
-# GitHubの使い方!
+# GitHubの使い方
 > [!IMPORTANT]
 > 前提
 > - vscodeの拡張機能で，`Dev Container`をインストールする.
