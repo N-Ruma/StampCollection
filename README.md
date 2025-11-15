@@ -24,7 +24,7 @@ $ git clone -b develop https://github.com/N-Ruma/StampCollection.git
 > -bオプションで任意のブランチからクローンする. デフォルトはmain.
 
 ## Docker
-vscodeでwslを開き，"フォルダを開く"から, "StampCollection/"を選択. (".git/"があるところ.)
+vscodeでwslを開き，"フォルダを開く"から, "StampCollection/"を選択. (".git/"があるところ.) <br>
 開いたら，"コンテナで再度開く"を選択.
 
 ## ユーザ登録
@@ -45,7 +45,8 @@ $ git config --local user.email <EMAIL>
 $ git checkout -b feature/<FEATURE>
 ```
 > [!NOTE]
-> -bオプションでブランチの新規作成と移動を同時にできる. <FEATURE>には追加する機能や修正する点などを入れるとわかりやすくていい.
+> -bオプションでブランチの新規作成と移動を同時にできる. <br>
+> <FEATURE>には追加する機能や修正する点などを入れるとわかりやすくていい.
 > e.g.
 > ```
 > $ git checkout -b feature/add_map_view
@@ -68,7 +69,8 @@ $ git commit
 $ git commit -m "<COMMIT_MESSAGE>"
 ```
 > [!NOTE]
-> -mオプションを付けない場合, vimが起動する. 他のエディタを使いたい場合はそれをインストールして,
+> -mオプションを付けない場合, vimが起動する. <br>
+> 他のエディタを使いたい場合はそれをインストールして,
 > ```
 > $ git config --global core.editor <EDITOR_NAME>
 > ```
@@ -78,14 +80,14 @@ $ git commit -m "<COMMIT_MESSAGE>"
 $ git push -u origin feature/<FEATURE>
 
 ## プルリクエスト
-1\. リポジトリにアクセス
-2\. "pull requests"をクリック
-3\. "New pull request"をクリック
-4\. 統合元ブランチ(`base:develop`など)と，統合するブランチ(`compare:feature<FEATURE>`など)を選択.
-5\. "Create Pull request"をクリック
-6\. 作業内容などを記入して，右の"Reviewers"から，レビュアーを1人以上選択. (マージしていいかを確認してもらうため.)
-7\. "Create Pull request"をクリック
-8\. Approveをもらったら，"Merge pull request"をクリックして，マージする.
+1\. リポジトリにアクセス <br>
+2\. "pull requests"をクリック <br>
+3\. "New pull request"をクリック <br>
+4\. 統合元ブランチ(`base:develop`など)と，統合するブランチ(`compare:feature<FEATURE>`など)を選択. <br>
+5\. "Create Pull request"をクリック <br>
+6\. 作業内容などを記入して，右の"Reviewers"から，レビュアーを1人以上選択. (マージしていいかを確認してもらうため.) <br>
+7\. "Create Pull request"をクリック <br>
+8\. Approveをもらったら，"Merge pull request"をクリックして，マージする. <br>
 
 
 
