@@ -21,7 +21,7 @@
 > ```
 
 ## クローン
-WSLで任意のディレクトリに移動して，コマンドを実行.
+WSLで任意のディレクトリに移動して，`develop`ブランチをクローン.
 ```
 $ git clone -b develop https://github.com/N-Ruma/StampCollection.git
 ```
