@@ -21,7 +21,7 @@ WSLで任意のディレクトリに移動して，コマンドを実行.
 $ git clone -b develop https://github.com/N-Ruma/StampCollection.git
 ```
 > [!NOTE]
-> -bオプションで任意のブランチからクローンする. デフォルトはmain.
+> `-b`オプションで任意のブランチからクローンする. デフォルトは`main`.
 
 ## Docker
 vscodeでwslを開き，"フォルダを開く"から, `StampCollection/`を選択. (`.git/`があるところ.) <br>
@@ -45,8 +45,8 @@ $ git config --local user.email <EMAIL>
 $ git checkout -b feature/<FEATURE>
 ```
 > [!NOTE]
-> -bオプションでブランチの新規作成と移動を同時にできる. <br>
-> <FEATURE>には追加する機能や修正する点などを入れるとわかりやすくていい. <br>
+> `-b`オプションでブランチの新規作成と移動を同時にできる. <br>
+> `<FEATURE>`には追加する機能や修正する点などを入れるとわかりやすくていい. <br>
 > e.g.
 > ```
 > $ git checkout -b feature/add_map_view
@@ -59,7 +59,7 @@ $ git checkout -b feature/<FEATURE>
 $ git add .
 ```
 > [!NOTE]
-> "."でカレントディレクトリ下のすべてのファイルをステージングする.
+> `.`でカレントディレクトリ下のすべてのファイルをステージングする.
 
 ## コミット
 ```
@@ -69,7 +69,7 @@ $ git commit
 $ git commit -m "<COMMIT_MESSAGE>"
 ```
 > [!NOTE]
-> -mオプションを付けない場合, vimが起動する. <br>
+> `-m`オプションを付けない場合, `vim`が起動する. <br>
 > 他のエディタを使いたい場合はそれをインストールして,
 > ```
 > $ git config --global core.editor <EDITOR_NAME>
@@ -83,13 +83,13 @@ $ git push -u origin feature/<FEATURE>
 
 ## プルリクエスト
 1\. リポジトリにアクセス <br>
-2\. "pull requests"をクリック <br>
-3\. "New pull request"をクリック <br>
+2\. `pull requests`をクリック <br>
+3\. `New pull request`をクリック <br>
 4\. 統合元ブランチ(`base:develop`など)と，統合するブランチ(`compare:feature<FEATURE>`など)を選択. <br>
-5\. "Create Pull request"をクリック <br>
-6\. 作業内容などを記入して，右の"Reviewers"から，レビュアーを1人以上選択. (マージしていいかを確認してもらうため.) <br>
-7\. "Create Pull request"をクリック <br>
-8\. Approveをもらったら，"Merge pull request"をクリックして，マージする. <br>
+5\. `Create Pull request`をクリック <br>
+6\. 作業内容などを記入して，右の`Reviewers`から，レビュアーを1人以上選択. (マージしていいかを確認してもらうため.) <br>
+7\. `Create Pull request`をクリック <br>
+8\. Approveをもらったら，`Merge pull request`をクリックして，マージする. <br>
 
 
 
