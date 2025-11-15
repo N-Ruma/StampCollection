@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+{% endblock head %}
+
+{% block title %}
+<h1>Google Map</h1>
+{% endblock title %}
+
+{% block content %}
+<div id="map">
+<iframe src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d1474.5419163553238!2d141.032109!3d42.340736!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNDLCsDIwJzI2LjciTiAxNDHCsDAxJzU1LjYiRQ!5e0!3m2!1sja!2sjp!4v1762662771386!5m2!1sja!2sjp" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+</div>
+{% endblock content %}
+
+{% block redirect %}
+<a href="{% url 'home' %}">ホーム</a>
+{% endblock redirect %}
+
