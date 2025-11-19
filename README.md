@@ -107,9 +107,6 @@ $ git push -u origin feature/<FEATURE>
 ```
 $ git pull origin <REMOTE_BRANCH_NAME>
 ```
-<br>
-<br>
-<br>
 # 変更履歴
 2025/11/19:
 - `feature/*`ブランチの削除禁止,
