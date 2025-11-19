@@ -99,11 +99,18 @@ $ git push -u origin feature/<FEATURE>
 1. 作業内容などを記入して，右の`Reviewers`から，レビュアーを1人以上選択. (マージしていいかを確認してもらうため.)
 1. `Create pull request`をクリック
 1. Approveをもらったら，`Merge pull request`をクリックして，マージする.
-
-
-
+<br>
+<br>
+<br>
 # ローカルリポジトリの内容をリモートリポジトリの内容で更新する方法
 リモートリポジトリの内容を，**現在のブランチ**(`$ git branch`)に統合する場合:
 ```
 $ git pull origin <REMOTE_BRANCH_NAME>
 ```
+<br>
+<br>
+<br>
+# 変更履歴
+2025/11/19:
+- `feature/*`ブランチの削除禁止,
+- `release`ブランチへのプルリクエストで，4人以上の承認を得るようにした．
