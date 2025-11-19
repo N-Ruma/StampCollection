@@ -9,6 +9,14 @@
 
 
 
+# 変更履歴
+2025/11/19:
+- `feature/*`ブランチの削除禁止,
+- `release`ブランチへのプルリクエストで，4人以上の承認を得るようにした．
+- `develop`ブランチへのプルリクエストで，2人以上の承認を得るようにした．
+
+
+
 # GitHubの使い方
 > [!IMPORTANT]
 > 前提
@@ -100,13 +108,10 @@ $ git push -u origin feature/<FEATURE>
 1. `Create pull request`をクリック
 1. Approveをもらったら，`Merge pull request`をクリックして，マージする.
 
+
+
 # ローカルリポジトリの内容をリモートリポジトリの内容で更新する方法
 リモートリポジトリの内容を，**現在のブランチ**(`$ git branch`)に統合する場合:
 ```
 $ git pull origin <REMOTE_BRANCH_NAME>
 ```
-# 変更履歴
-2025/11/19:
-- `feature/*`ブランチの削除禁止,
-- `release`ブランチへのプルリクエストで，4人以上の承認を得るようにした．
-- `develop`ブランチへのプルリクエストで，2人以上の承認を得るようにした．
