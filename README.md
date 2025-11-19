@@ -102,7 +102,7 @@ $ git push -u origin feature/<FEATURE>
 1. リポジトリにアクセス
 1. `pull requests`をクリック
 1. `New pull request`をクリック
-1. 統合元ブランチ(`base:develop`など)と，統合するブランチ(`compare:feature<FEATURE>`など)を選択.
+1. 統合元ブランチ(`base:develop`など)と，統合するブランチ(`compare:feature/<FEATURE>`など)を選択.
 1. `Create pull request`をクリック
 1. 作業内容などを記入して，右の`Reviewers`から，レビュアーを1人以上選択. (マージしていいかを確認してもらうため.)
 1. `Create pull request`をクリック
