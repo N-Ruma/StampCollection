@@ -2,27 +2,34 @@
 {% load static %}
 
 {% block title %}
-<h1>ホーム</h1>
-<h2>
-{% if user.is_authenticated %}
-{{ user.username }} さん，ようこそ!
-{% else %}
-ログインしていません.
-{% endif %}
-</h2>
+  <h1>ホーム</h1>
+  <h2>
+    {% if user.is_authenticated %}
+      {{ user.username }} さん，ようこそ!
+    {% else %}
+      <font color="red">ログインしていません.</font>
+    {% endif %}
+  </h2>
 {% endblock title %}
 
 {% block content %}
 {% endblock content %}
 
 {% block redirect %}
-{% if user.is_authenticated %}
-<form method="POST" action="{% url 'logout' %}">
-  {% csrf_token %}
-<button>ログアウト</button>
-</form>
-{% else %}
-<p><a href="{% url 'login' %}">ログイン</a></p>
-<p><a href="{% url 'register' %}">アカウント作成</a></p>
-{% endif %}
+  {% if user.is_authenticated %}
+    <form method="POST" action="{% url 'logout' %}">
+      {% csrf_token %}
+      <button>ログアウト</button>
+    </form>
+    <div><a href="{% url 'add_map_pin' %}">マップピンを追加</a></div>
+  {% else %}
+    <div><a href="{% url 'login' %}">ログイン</a></div>
+    <div><a href="{% url 'register' %}">アカウント作成</a></div>
+  {% endif %}
+
+  <!-- FOR DEBUG -->
+  <h2>[DEBUG REDIRECTS]</h2>
+  <div><a href="admin/">admin</a></div>
+  <!-- FOR DEBUG -->
+
 {% endblock redirect %}
