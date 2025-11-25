@@ -134,4 +134,4 @@ $ git pull origin <REMOTE_BRANCH_NAME>
 - Dockerプロセスの確認(停止中も含む): `$ docker ps -a`
 イメージの削除やコンテナの削除を適宜行うときは，以下の手順で削除できるはずです．
 - Dockerイメージの削除:
-\t 1. a
+1. a
