@@ -1,4 +1,7 @@
 # 変更履歴
+2025/11/26:
+- GitHubにSSH接続する方法等の説明を追記しました． -> [GitHubにSSH接続する](#ssh_connect)
+
 2025/11/25:
 - Dockerイメージやコンテナの整理に関する説明を追記しました．-> [Docker環境を整理する](#docker_cleanup)
 
@@ -125,12 +128,13 @@ $ git push -u origin feature/<FEATURE>
 ---
 
 # GitHubにSSH接続する
+<a id="ssh_connect"></a>
 1. dockerコンテナの中に入る
 1. `$ cd ~/.ssh`で`~/.ssh`に移動(なかったら作成)
 1. `ssh-keygen`でSSH鍵を作成
 1. 鍵の名前(以降`<KEY_NAME>`とする)を指定．パスフレーズは空白のままでOK
 1. `$ vi config`で`~/.ssh/config`ファイルを作成(vimの使い方は，各自検索してください．nanoをインストールして使用しても問題ありません．)
-1. 以下の内容を記載
+1. 以下の内容を記載. `<ALIAS_NAME>`は任意でOK
 ```
 Host <ALIAS_NAME>
   HostName github.com
@@ -139,6 +143,18 @@ Host <ALIAS_NAME>
   TCPKeepAlive yes
   IdentitiesOnly yes
 ```
+1. `$ cat ./<KEY_NAME>.pub`でSSH公開鍵をコピーして，GitHubアカウントに公開鍵を設定(調べるとすぐ出てきます．)
+1. `ssh -T git@<ALIAS_NAME>`で認証完了できたらOK
+
+## SSH接続でgit cloneなどする
+> [!NOTE]
+> **WSL上でも同じように設定を行う**と，`$ git clone`がSSH接続で可能になります．
+1. WSL上で`$ git clone -b develop git@<ALIAS_NAME>:N-Ruma/StampCollection.git`でカレントディレクトリにクローンできます．
+1. コンテナを開く
+1. `$ git config --local user.name <USERNAME>`及び`$ git config --local user.email <EMAIL>`でユーザー名とメールを設定
+1. `$ git remote set-url origin git@<ALIAS_NAME>:N-Ruma/StampCollection.git`でリモートの設定
+1. `$ git remote -v`で設定を確認
+1. ローカルブランチの作成や，ファイルの編集，コミット，プッシュなどは上記と変わりません．
 
 # ローカルリポジトリの内容をリモートリポジトリの内容で更新する方法
 リモートリポジトリの内容を，**現在のブランチ**(`$ git branch`)に統合する場合:
