@@ -1,4 +1,4 @@
 from django.contrib import admin
 
-from .models import MapPin
-admin.site.register(MapPin)
+from .models import StampPin
+admin.site.register(StampPin)

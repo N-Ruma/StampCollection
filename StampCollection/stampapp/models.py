@@ -3,7 +3,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-class MapPin(models.Model):
+class StampPin(models.Model):
     name = models.CharField(
         max_length=128,
         unique=True,
@@ -28,7 +28,7 @@ class MapPin(models.Model):
                     "latitude",
                     "longitude",
                 ],
-                name="map_pin_unique",
+                name="stamp_pin_unique",
             ),
         ]
     
