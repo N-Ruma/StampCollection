@@ -124,6 +124,22 @@ $ git push -u origin feature/<FEATURE>
 
 ---
 
+# GitHubにSSH接続する
+1. dockerコンテナの中に入る
+1. `$ cd ~/.ssh`で`~/.ssh`に移動(なかったら作成)
+1. `ssh-keygen`でSSH鍵を作成
+1. 鍵の名前(以降`<KEY_NAME>`とする)を指定．パスフレーズは空白のままでOK
+1. `$ vi config`で`~/.ssh/config`ファイルを作成(vimの使い方は，各自検索してください．nanoをインストールして使用しても問題ありません．)
+1. 以下の内容を記載
+```
+Host <ALIAS_NAME>
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/<KEY_NAME>
+  TCPKeepAlive yes
+  IdentitiesOnly yes
+```
+
 # ローカルリポジトリの内容をリモートリポジトリの内容で更新する方法
 リモートリポジトリの内容を，**現在のブランチ**(`$ git branch`)に統合する場合:
 ```
