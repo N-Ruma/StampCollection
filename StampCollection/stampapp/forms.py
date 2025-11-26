@@ -1,9 +1,9 @@
 from django.forms import ModelForm
-from .models import MapPin
+from .models import StampPin
 
-class MapPinForm(ModelForm):
+class StampPinForm(ModelForm):
     class Meta:
-        model = MapPin
+        model = StampPin
         # 入力するフィールド
         fields = [
             "name",
