@@ -1,4 +1,7 @@
 django
 django-cleanup
 djangorestframework
+torch
+torchvision
+torchaudio
 static
