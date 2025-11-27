@@ -5,7 +5,7 @@ from uuid import uuid4
 User = get_user_model()
 
 class StampPin(models.Model):    
-    def get_uuid_image_path(self, filename: str) -> str:
+    def stamp_upload_to(self, filename: str) -> str:
         '''画像パスをUUIDに設定し取得する
         
         :return: カスタマイズしたファイル名を含む画像パス
@@ -34,7 +34,7 @@ class StampPin(models.Model):
 
     stamp_image = models.ImageField(
         verbose_name="stamp_image",
-        upload_to=get_uuid_image_path, # type: ignore
+        upload_to=stamp_upload_to, # type: ignore
         null=True, # データ生成時のnullはOK
         blank=False, # 画像アップロード時のblankはNG
     )
