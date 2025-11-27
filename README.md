@@ -2,6 +2,7 @@
 2025/11/27:
 - `feature/*`ブランチの保護の必要性がないと判断したため，ルールセットを削除しました．
 - HTMLファイルの命名規則から，`_view`を末尾につける必要性がないと判断したため，削除しました．
+- 主要なディレクトリやファイルがわかりやすいように，ファイル構造の項目を追加しました． -> [ファイル構造](#file_structure)
 
 2025/11/26:
 - GitHubにSSH接続する方法等の説明を追記しました． -> [GitHubにSSH接続する](#ssh_connect)
@@ -37,6 +38,37 @@
 - script: htmlファイルに個別にスクリプトを埋め込む場合のブロック．`script`タグで囲むのを忘れないように．
 - 装飾を行う場合に備えて，Bootstrapという，あらかじめデザインされたテンプレートなどを使って装飾できます．
 - ログインを必要とする画面を作成するには，`views.py`内の関数に，`@login_required`デコレータを付与することで実装できます．
+
+# ファイル構造
+<a id="file_structure"></a>
+主要なディレクトリ及びファイルのファイル構造:
+```
+StampCollection/
+\_ accounts/
+    \_ urls.py
+    \_ views.py
+\_ stampapp/
+    \_ admin.py
+    \_ forms.py
+    \_ models.py
+    \_ urls.py
+    \_ views.py
+\_ StampCollection/
+    \_ settings.py
+    \_ urls.py
+\_ static/
+    \_ css/
+        \_ style.css
+\_ templates/
+    \_ base.html
+    \_ accounts/
+        \_ login.html
+        \_ register.html
+    \_ stampapp/
+        \_ home.html
+        \_ add_stamp_pin.html
+\_ manage.py
+```
 
 # GitHubの使い方
 > [!IMPORTANT]
