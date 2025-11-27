@@ -8,12 +8,15 @@ class StampPin(models.Model):
         max_length=128,
         unique=True,
     )
+    
     latitude = models.FloatField(
         verbose_name="latitude",
     )
+    
     longitude = models.FloatField(
         verbose_name="longitude",
     )
+    
     # スタンプを獲得したユーザ
     users = models.ManyToManyField(
         to=User,
