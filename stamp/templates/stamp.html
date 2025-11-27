@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>stump</title>
+    <script src="https://unpkg.com/konva@9/konva.min.js"></script>
+    <style>
+    body { font-family: sans-serif; }
+    #container { border: 1px solid #ccc; margin-top: 10px; }
+  </style>
+  <head>
+  <meta charset="UTF-8">
+    <title>stump</title>
+  <script src="https://unpkg.com/konva@9/konva.min.js"></script>
+  <style>
+    body { font-family: sans-serif; }
+    #container { border: 1px solid #ccc; margin-top: 10px; }
+  </style>
+</head>
+<body>
+
+<h2>画像アップロード → 3×3 スタンプ生成</h2>
+<input type="file" id="upload" accept="image/*">
+
+<div id="container"><div class="konvajs-content" role="presentation" style="position: relative; user-select: none; width: 700px; height: 650px;"><canvas width="875" height="812" style="padding: 0px; margin: 0px; border: 0px; background: transparent; position: absolute; top: 0px; left: 0px; width: 700px; height: 650px; display: block;"></canvas></div></div>
+
+<script>
+const stage = new Konva.Stage({
+  container: "container",
+  width: 700,
+  height: 650,
+});
+
+const layer = new Konva.Layer();
+stage.add(layer);
+
+// ------------------------------
+// ⭐ フィルター適用テンプレ
+// ------------------------------
+function applyFilters(kImage, type) {
+  if (type === 0) {
+    // ① 昔の写真風
+    kImage.cache();
+    kImage.filters([Konva.Filters.Sepia, Konva.Filters.Noise]);
+    kImage.noise(0);
+  }
+
+  if (type === 1) {
+    // ② ドット絵風
+    kImage.cache();
+    kImage.filters([Konva.Filters.Pixelate, Konva.Filters.HSL]);
+    kImage.pixelSize(3);
+    kImage.saturation(0.5);
+  }
+
+  if (type === 2) {
+    // ③ 絵画風
+    kImage.cache();
+    kImage.filters([Konva.Filters.Emboss, Konva.Filters.Contrast]);
+    kImage.embossStrength(0.4);
+    kImage.embossDirection("top-left");
+    kImage.embossBlend(true);
+    kImage.contrast(20);
+  }
+}
+
+// ------------------------------
+// ⭐ 各形状クリップ関数
+// ------------------------------
+function circleClip(ctx, width, height) {
+  ctx.arc(width / 2, height / 2, Math.min(width, height) / 2, 0, Math.PI * 2);
+}
+
+function starClip(ctx, width, height) {
+  ctx.beginPath();
+  let cx = width / 2;
+  let cy = height / 2;
+  let spikes = 5;
+  let outerRadius = Math.min(width, height) / 2;
+  let innerRadius = outerRadius / 2.5;
+
+  let rot = Math.PI / 2 * 3;
+  let step = Math.PI / spikes;
+
+  ctx.moveTo(cx, cy - outerRadius);
+  for (let i = 0; i < spikes; i++) {
+    ctx.lineTo(
+      cx + Math.cos(rot) * outerRadius,
+      cy + Math.sin(rot) * outerRadius
+    );
+    rot += step;
+
+    ctx.lineTo(
+      cx + Math.cos(rot) * innerRadius,
+      cy + Math.sin(rot) * innerRadius
+    );
+    rot += step;
+  }
+  ctx.closePath();
+}
+
+function hexClip(ctx, width, height) {
+  ctx.beginPath();
+  let cx = width / 2;
+  let cy = height / 2;
+  let r = Math.min(width, height) / 2;
+
+  for (let i = 0; i < 6; i++) {
+    let angle = ((Math.PI * 2) / 6) * i - Math.PI / 2;
+    let x = cx + r * Math.cos(angle);
+    let y = cy + r * Math.sin(angle);
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+}
+
+// ------------------------------
+// ⭐ スタンプ作成
+// ------------------------------
+function createStamp(imageObj, effectType, shapeType, row, col) {
+  const size = 150;
+
+  let stamp = new Konva.Image({
+    image: imageObj,
+    width: size,
+    height: size,
+    x: col * 200 + 70,
+    y: row * 200 + 20,
+  });
+
+  // shapeType: 0=丸, 1=星, 2=六角形
+  if (shapeType === 0) {
+    stamp.sceneFunc((ctx, shape) => {
+      ctx.save();
+      circleClip(ctx, size, size);
+      ctx.clip();
+      ctx.drawImage(imageObj, 0, 0, size, size);
+      ctx.restore();
+    });
+  }
+
+  if (shapeType === 1) {
+    stamp.sceneFunc((ctx, shape) => {
+      ctx.save();
+      starClip(ctx, size, size);
+      ctx.clip();
+      ctx.drawImage(imageObj, 0, 0, size, size);
+      ctx.restore();
+    });
+  }
+
+  if (shapeType === 2) {
+    stamp.sceneFunc((ctx, shape) => {
+      ctx.save();
+      hexClip(ctx, size, size);
+      ctx.clip();
+      ctx.drawImage(imageObj, 0, 0, size, size);
+      ctx.restore();
+    });
+  }
+
+  // フィルター反映
+  applyFilters(stamp, effectType);
+
+  layer.add(stamp);
+}
+
+// ------------------------------
+// ⭐ アップロード処理
+// ------------------------------
+document.getElementById("upload").addEventListener("change", function (e) {
+  let file = e.target.files[0];
+  if (!file) return;
+
+  let reader = new FileReader();
+  reader.onload = function (evt) {
+    let img = new Image();
+    img.onload = function () {
+      layer.destroyChildren();
+
+      // 3種類のエフェクト × 3種類の形状
+      for (let effect = 0; effect < 3; effect++) {
+        for (let shape = 0; shape < 3; shape++) {
+          let row = shape;   // 0段目 丸, 1段目 星, 2段目 六角形
+          let col = effect;  // 横方向 0〜2
+          createStamp(img, effect, shape, row, col);
+        }
+      }
+
+      layer.draw();
+    };
+    img.src = evt.target.result;
+  };
+  reader.readAsDataURL(file);
+});
+</script>
+
+
+
+</body>
+<html lang="ja"><head>
+  <meta charset="UTF-8">
+    <title>stump</title>
+  <script src="https://unpkg.com/konva@9/konva.min.js"></script>
+  <style>
+    body { font-family: sans-serif; }
+    #container { border: 1px solid #ccc; margin-top: 10px; }
+  </style>
+</head>
+<body>
+
+<h2>画像アップロード → 3×3 スタンプ生成</h2>
+<input type="file" id="upload" accept="image/*">
+
+<div id="container"><div class="konvajs-content" role="presentation" style="position: relative; user-select: none; width: 700px; height: 650px;"><canvas width="875" height="812" style="padding: 0px; margin: 0px; border: 0px; background: transparent; position: absolute; top: 0px; left: 0px; width: 700px; height: 650px; display: block;"></canvas></div></div>
+
+<script>
+const stage = new Konva.Stage({
+  container: "container",
+  width: 700,
+  height: 650,
+});
+
+const layer = new Konva.Layer();
+stage.add(layer);
+
+// ------------------------------
+// ⭐ フィルター適用テンプレ
+// ------------------------------
+function applyFilters(kImage, type) {
+  if (type === 0) {
+    // ① 昔の写真風
+    kImage.cache();
+    kImage.filters([Konva.Filters.Sepia, Konva.Filters.Noise]);
+    kImage.noise(0);
+  }
+
+  if (type === 1) {
+    // ② ドット絵風
+    kImage.cache();
+    kImage.filters([Konva.Filters.Pixelate, Konva.Filters.HSL]);
+    kImage.pixelSize(3);
+    kImage.saturation(0.5);
+  }
+
+  if (type === 2) {
+    // ③ 絵画風
+    kImage.cache();
+    kImage.filters([Konva.Filters.Emboss, Konva.Filters.Contrast]);
+    kImage.embossStrength(0.4);
+    kImage.embossDirection("top-left");
+    kImage.embossBlend(true);
+    kImage.contrast(20);
+  }
+}
+
+// ------------------------------
+// ⭐ 各形状クリップ関数
+// ------------------------------
+function circleClip(ctx, width, height) {
+  ctx.arc(width / 2, height / 2, Math.min(width, height) / 2, 0, Math.PI * 2);
+}
+
+function starClip(ctx, width, height) {
+  ctx.beginPath();
+  let cx = width / 2;
+  let cy = height / 2;
+  let spikes = 5;
+  let outerRadius = Math.min(width, height) / 2;
+  let innerRadius = outerRadius / 2.5;
+
+  let rot = Math.PI / 2 * 3;
+  let step = Math.PI / spikes;
+
+  ctx.moveTo(cx, cy - outerRadius);
+  for (let i = 0; i < spikes; i++) {
+    ctx.lineTo(
+      cx + Math.cos(rot) * outerRadius,
+      cy + Math.sin(rot) * outerRadius
+    );
+    rot += step;
+
+    ctx.lineTo(
+      cx + Math.cos(rot) * innerRadius,
+      cy + Math.sin(rot) * innerRadius
+    );
+    rot += step;
+  }
+  ctx.closePath();
+}
+
+function hexClip(ctx, width, height) {
+  ctx.beginPath();
+  let cx = width / 2;
+  let cy = height / 2;
+  let r = Math.min(width, height) / 2;
+
+  for (let i = 0; i < 6; i++) {
+    let angle = ((Math.PI * 2) / 6) * i - Math.PI / 2;
+    let x = cx + r * Math.cos(angle);
+    let y = cy + r * Math.sin(angle);
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+}
+
+// ------------------------------
+// ⭐ スタンプ作成
+// ------------------------------
+function createStamp(imageObj, effectType, shapeType, row, col) {
+  const size = 150;
+
+  let stamp = new Konva.Image({
+    image: imageObj,
+    width: size,
+    height: size,
+    x: col * 200 + 70,
+    y: row * 200 + 20,
+  });
+
+  // shapeType: 0=丸, 1=星, 2=六角形
+  if (shapeType === 0) {
+    stamp.sceneFunc((ctx, shape) => {
+      ctx.save();
+      circleClip(ctx, size, size);
+      ctx.clip();
+      ctx.drawImage(imageObj, 0, 0, size, size);
+      ctx.restore();
+    });
+  }
+
+  if (shapeType === 1) {
+    stamp.sceneFunc((ctx, shape) => {
+      ctx.save();
+      starClip(ctx, size, size);
+      ctx.clip();
+      ctx.drawImage(imageObj, 0, 0, size, size);
+      ctx.restore();
+    });
+  }
+
+  if (shapeType === 2) {
+    stamp.sceneFunc((ctx, shape) => {
+      ctx.save();
+      hexClip(ctx, size, size);
+      ctx.clip();
+      ctx.drawImage(imageObj, 0, 0, size, size);
+      ctx.restore();
+    });
+  }
+
+  // フィルター反映
+  applyFilters(stamp, effectType);
+
+  layer.add(stamp);
+}
+
+// ------------------------------
+// ⭐ アップロード処理
+// ------------------------------
+document.getElementById("upload").addEventListener("change", function (e) {
+  let file = e.target.files[0];
+  if (!file) return;
+
+  let reader = new FileReader();
+  reader.onload = function (evt) {
+    let img = new Image();
+    img.onload = function () {
+      layer.destroyChildren();
+
+      // 3種類のエフェクト × 3種類の形状
+      for (let effect = 0; effect < 3; effect++) {
+        for (let shape = 0; shape < 3; shape++) {
+          let row = shape;   // 0段目 丸, 1段目 星, 2段目 六角形
+          let col = effect;  // 横方向 0〜2
+          createStamp(img, effect, shape, row, col);
+        }
+      }
+
+      layer.draw();
+    };
+    img.src = evt.target.result;
+  };
+  reader.readAsDataURL(file);
+});
+</script>
+
+
+
+</body>
+</html>

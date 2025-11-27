@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
+    <!-- Django テンプレート側で CSRF トークンを埋め込む -->
+    <meta name="csrf-token" content="{{ csrf_token }}">
+</head>
+<body>
+    <div>
+        <input type="file" onchange="convertToBase64()">
+        <button onclick="convertToForm()">送信</button>
+        <img src="" alt="" style="max-width:300px; max-height:300px; object-fit:contain;">
+    </div>
+
+    <script>
+        // Base64プレビュー表示
+        function convertToBase64() {
+            const file = document.querySelector('input[type=file]').files[0];
+            const preview = document.querySelector('img');
+            const reader = new FileReader();
+
+            reader.addEventListener('load', () => {
+                preview.src = reader.result;
+            });
+
+            if (file) reader.readAsDataURL(file);
+        }
+
+        // CSRFトークンを取得
+        function getCSRFToken() {
+            return document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        }
+
+        // FormData送信
+        function convertToForm() {
+            const fileInput = document.querySelector('input[type=file]').files[0];
+            if (!fileInput) return alert("ファイルを選択してください");
+
+            const imgPreview = document.querySelector('img');
+            const imgData = imgPreview.src;
+            const imgFile = _convertToFile(imgData, fileInput);
+
+            const fd = new FormData();
+            fd.append('image', imgFile);
+
+            fetch('/stamp/upload-image', {
+                method: 'POST',
+                body: fd,
+                headers: {
+                    'X-CSRFToken': getCSRFToken() // CSRFヘッダーを追加
+                },
+                credentials: 'same-origin' // cookie送信
+            })
+            .then(res => res.json())
+            .then(data => console.log('成功:', data))
+            .catch(err => console.error('エラー:', err));
+        }
+
+        // Base64 → File 変換
+        function _convertToFile(imgData, file) {
+            const byteString = atob(imgData.split(',')[1]);
+            const arrayBuffer = new Uint8Array(byteString.length);
+            for (let i = 0; i < byteString.length; i++) {
+                arrayBuffer[i] = byteString.charCodeAt(i);
+            }
+            return new File([arrayBuffer], file.name, { type: file.type });
+        }
+    </script>
+</body>
+</html>

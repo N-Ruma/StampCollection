@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>画像 Base64 変換・復元・JPG変換ツール</title>
+</head>
+<body>
+    <h1>画像 Base64 変換・復元・JPG変換ツール</h1>
+
+    <!-- ===============================
+         ① 画像 → Base64 変換
+    ================================= -->
+    <h2>① 画像を Base64 に変換</h2>
+    <input type="file" id="imageInput" accept="image/*">
+
+    <h3>プレビュー（元画像）</h3>
+    <img id="imagePreview" src="#" style="max-width:300px; display:none;">
+
+    <h3>Base64データ</h3>
+    <textarea id="base64Output" rows="10" cols="80"></textarea>
+
+    <hr>
+
+    <!-- ===============================
+         ② Base64 → 画像に復元
+    ================================= -->
+    <h2>② Base64 から画像を復元</h2>
+    <button id="restoreButton">画像に復元</button>
+
+    <h3>復元された画像</h3>
+    <img id="restoredImage" src="#" style="max-width:300px; display:none;">
+    <br><br>
+    <a id="downloadRestored" href="#" download="restored.png" style="display:none;">
+        復元画像をダウンロード
+    </a>
+
+    <hr>
+
+    <!-- ===============================
+         ③ PNG/JPG/WebP → JPG 変換
+    ================================= -->
+    <h2>③ 画像を JPG に変換</h2>
+    <button id="convertToJpgButton">JPG に変換</button>
+
+    <h3>変換後の JPG</h3>
+    <img id="jpgImage" src="#" style="max-width:300px; display:none;">
+    <br><br>
+    <a id="downloadJpg" href="#" download="converted.jpg" style="display:none;">
+        JPG をダウンロード
+    </a>
+
+    <script>
+        // ====================================
+        // ① 画像 → Base64 変換
+        // ====================================
+        document.getElementById('imageInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const base64 = event.target.result;
+
+                // 元画像プレビュー
+                const img = document.getElementById('imagePreview');
+                img.src = base64;
+                img.style.display = "block";
+
+                // テキストエリアに Base64 を表示
+                document.getElementById('base64Output').value = base64;
+            };
+            reader.readAsDataURL(file);
+        });
+
+
+        // ====================================
+        // ② Base64 → 画像に復元
+        // ====================================
+        document.getElementById('restoreButton').addEventListener('click', function() {
+            const base64 = document.getElementById('base64Output').value.trim();
+
+            if (!base64.startsWith("data:image")) {
+                alert("正しい Base64 (data:image〜) を入力してください");
+                return;
+            }
+
+            const restored = document.getElementById('restoredImage');
+            restored.src = base64;
+            restored.style.display = "block";
+
+            const link = document.getElementById('downloadRestored');
+            link.href = base64;
+            link.style.display = "inline-block";
+        });
+
+
+        // ====================================
+        // ③ PNG/JPG/WebP → JPG 変換
+        // ====================================
+        document.getElementById('convertToJpgButton').addEventListener('click', function() {
+            const base64 = document.getElementById('base64Output').value.trim();
+
+            if (!base64.startsWith("data:image")) {
+                alert("Base64 に変換後のデータが必要です！");
+                return;
+            }
+
+            const img = new Image();
+            img.onload = function() {
+                const canvas = document.createElement("canvas");
+                canvas.width = img.width;
+                canvas.height = img.height;
+
+                const ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0);
+
+                // JPG に変換
+                const jpgBase64 = canvas.toDataURL("image/jpeg", 0.9);
+
+                // 変換後の画像表示
+                const jpgImg = document.getElementById('jpgImage');
+                jpgImg.src = jpgBase64;
+                jpgImg.style.display = "block";
+
+                const link = document.getElementById('downloadJpg');
+                link.href = jpgBase64;
+                link.style.display = "inline-block";
+            };
+
+            img.src = base64;
+        });
+    </script>
+
+    <h2>画像アップロードするとスタンプ作成できます</h2>
+    <input type ="file" id = "upload" accept="image/*">
+    <div id ="container"></div>
+    <script>
+const stage = new Konva.Stage({
+  container: "container",
+  width: 300,
+  height: 200,
+});
+
+const layer = new Konva.Layer();
+stage.add(layer);
+
+// ------------------------------
+// ⭐ フィルター適用テンプレ
+// ------------------------------
+function applyFilters(kImage, type) {
+  if (type === 0) {
+    // ① 昔の写真風
+    kImage.cache();
+    kImage.filters([Konva.Filters.Sepia, Konva.Filters.Noise]);
+    kImage.noise(0);
+  }
+
+  if (type === 1) {
+    // ② ドット絵風
+    kImage.cache();
+    kImage.filters([Konva.Filters.Pixelate, Konva.Filters.HSL]);
+    kImage.pixelSize(3);
+    kImage.saturation(0.5);
+  }
+
+  if (type === 2) {
+    // ③ 絵画風
+    kImage.cache();
+    kImage.filters([Konva.Filters.Emboss, Konva.Filters.Contrast]);
+    kImage.embossStrength(0.4);
+    kImage.embossDirection("top-left");
+    kImage.embossBlend(true);
+    kImage.contrast(20);
+  }
+}
+
+// ------------------------------
+// ⭐ 各形状クリップ関数
+// ------------------------------
+function circleClip(ctx, width, height) {
+  ctx.arc(width / 2, height / 2, Math.min(width, height) / 2, 0, Math.PI * 2);
+}
+
+function starClip(ctx, width, height) {
+  ctx.beginPath();
+  let cx = width / 2;
+  let cy = height / 2;
+  let spikes = 5;
+  let outerRadius = Math.min(width, height) / 2;
+  let innerRadius = outerRadius / 2.5;
+
+  let rot = Math.PI / 2 * 3;
+  let step = Math.PI / spikes;
+
+  ctx.moveTo(cx, cy - outerRadius);
+  for (let i = 0; i < spikes; i++) {
+    ctx.lineTo(
+      cx + Math.cos(rot) * outerRadius,
+      cy + Math.sin(rot) * outerRadius
+    );
+    rot += step;
+
+    ctx.lineTo(
+      cx + Math.cos(rot) * innerRadius,
+      cy + Math.sin(rot) * innerRadius
+    );
+    rot += step;
+  }
+  ctx.closePath();
+}
+
+function hexClip(ctx, width, height) {
+  ctx.beginPath();
+  let cx = width / 2;
+  let cy = height / 2;
+  let r = Math.min(width, height) / 2;
+
+  for (let i = 0; i < 6; i++) {
+    let angle = ((Math.PI * 2) / 6) * i - Math.PI / 2;
+    let x = cx + r * Math.cos(angle);
+    let y = cy + r * Math.sin(angle);
+    if (i === 0) ctx.moveTo(x, y);
+    else ctx.lineTo(x, y);
+  }
+  ctx.closePath();
+}
+
+// ------------------------------
+// ⭐ スタンプ作成
+// ------------------------------
+function createStamp(imageObj, effectType, shapeType, row, col) {
+  const size = 150;
+
+  let stamp = new Konva.Image({
+    image: imageObj,
+    width: size,
+    height: size,
+    x: col * 200 + 70,
+    y: row * 200 + 20,
+  });
+
+  // shapeType: 0=丸, 1=星, 2=六角形
+  if (shapeType === 0) {
+    stamp.sceneFunc((ctx, shape) => {
+      ctx.save();
+      circleClip(ctx, size, size);
+      ctx.clip();
+      ctx.drawImage(imageObj, 0, 0, size, size);
+      ctx.restore();
+    });
+  }
+
+  if (shapeType === 1) {
+    stamp.sceneFunc((ctx, shape) => {
+      ctx.save();
+      starClip(ctx, size, size);
+      ctx.clip();
+      ctx.drawImage(imageObj, 0, 0, size, size);
+      ctx.restore();
+    });
+  }
+
+  if (shapeType === 2) {
+    stamp.sceneFunc((ctx, shape) => {
+      ctx.save();
+      hexClip(ctx, size, size);
+      ctx.clip();
+      ctx.drawImage(imageObj, 0, 0, size, size);
+      ctx.restore();
+    });
+  }
+
+  // フィルター反映
+  applyFilters(stamp, effectType);
+
+  layer.add(stamp);
+}
+
+// ------------------------------
+// ⭐ アップロード処理
+// ------------------------------
+document.getElementById("upload").addEventListener("change", function (e) {
+  let file = e.target.files[0];
+  if (!file) return;
+
+  let reader = new FileReader();
+  reader.onload = function (evt) {
+    let img = new Image();
+    img.onload = function () {
+      layer.destroyChildren();
+
+      // 3種類のエフェクト × 3種類の形状
+      for (let effect = 0; effect < 3; effect++) {
+        for (let shape = 0; shape < 3; shape++) {
+          let row = shape;   // 0段目 丸, 1段目 星, 2段目 六角形
+          let col = effect;  // 横方向 0〜2
+          createStamp(img, effect, shape, row, col);
+        }
+      }
+
+      layer.draw();
+    };
+    img.src = evt.target.result;
+  };
+  reader.readAsDataURL(file);
+});
+</script>
+</body>
+</html>

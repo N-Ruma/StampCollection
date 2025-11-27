@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>画像Base64変換とプレビュー</title>
+</head>
+<body>
+    <h1>画像をBase64に変換して表示</h1>
+    <input type="file" id="imageInput" accept="image/*">
+    <div id="previewContainer">
+        <h2>プレビュー:</h2>
+        <img id="imagePreview" src="#" alt="選択された画像" style="max-width: 300px; display: none;">
+        <h3>Base64データ:</h3>
+        <textarea id="base64Output" rows="10" cols="80" readonly></textarea>
+    </div>
+
+    <script>
+        document.getElementById('imageInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+
+                reader.onload = function(readerEvent) {
+                    const base64String = readerEvent.target.result; // Base64データ (MIMEタイプ含む)
+                    document.getElementById('imagePreview').src = base64String;
+                    document.getElementById('imagePreview').style.display = 'block';
+                    document.getElementById('base64Output').value = base64String;
+                };
+
+                reader.readAsDataURL(file); // ファイルをData URL (Base64) として読み込む
+            }
+        });
+    </script>
+</body>
+</html>
