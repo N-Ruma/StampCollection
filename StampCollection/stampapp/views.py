@@ -8,13 +8,13 @@ from .forms import StampPinForm
 User = get_user_model()
 
 def home_view(request):
-    template_name = "stampapp/home_view.html"
+    template_name = "stampapp/home.html"
     context = {}
     return render(request, template_name, context)
 
 @login_required
 def add_stamp_pin_view(request):
-    template_name = "stampapp/add_stamp_pin_view.html"
+    template_name = "stampapp/add_stamp_pin.html"
     context = {}
     if request.method == "POST":
         form = StampPinForm(request.POST, request.FILES)
