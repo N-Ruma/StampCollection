@@ -19,13 +19,6 @@ def add_stamp_pin_view(request):
     if request.method == "POST":
         form = StampPinForm(request.POST, request.FILES)
         if form.is_valid():
-            # formからデータを受け取り，MapPinを追加する
-            # stamp_pin = StampPin()
-            # stamp_pin.name = form.cleaned_data.get("name") # type: ignore
-            # stamp_pin.latitude = form.cleaned_data.get("latitude") # type: ignore
-            # stamp_pin.longitude = form.cleaned_data.get("longitude") # type: ignore
-            # stamp_pin.stamp_image = request.FILES.get("stamp_image")
-            # stamp_pin.save()
             form.save()
             return redirect("home")
     else:
