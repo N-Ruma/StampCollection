@@ -9,5 +9,5 @@ class StampPinForm(ModelForm):
             "name",
             "latitude",
             "longitude",
+            "stamp_image",
         ]
-        
