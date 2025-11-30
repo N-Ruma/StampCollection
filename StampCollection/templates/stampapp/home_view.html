@@ -17,6 +17,10 @@
 
 {% block redirect %}
 {% if user.is_authenticated %}
+<!-- ▼▼ 追加：マップ表示ボタン ▼▼ -->
+<p><a href="{% url 'map' %}"><button>マップを開く</button></a></p>
+<!-- ▲▲ 追加ここまで ▲▲ -->
+
 <form method="POST" action="{% url 'logout' %}">
   {% csrf_token %}
 <button>ログアウト</button>

@@ -1,0 +1,9 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#map {
+  height: 100vh; /* 画面いっぱいに地図を表示 */
+  width: 100%;
+}
