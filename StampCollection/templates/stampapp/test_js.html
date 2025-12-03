@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<script src='{% static "js/script.js" %}'></script>
+<link rel="stylesheet" href='{% static "css/style.css" %}'>
+{% endblock head %}
+
+{% block title %}
+  <h1>test js</h1>
+{% endblock title %}
+
+{% block content %}
+  {% for stamp in stamps %}
+    <div class="stamp">
+      <canvas class="img-thumbnail" id="canvas_{{ stamp.id }}" width="300" height="300"></canvas>
+      <div class="stamp_text">
+        <p class="stamp_title">{{ stamp }}</p><br>
+        <p class="stamp_description">discription: latitude: {{ stamp.latitude }}, longitude: {{ stamp.longitude }}</p>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock content %}
+
+{% block redirect %}
+{% endblock redirect %}
+
+{% block script %}
+<script>
+  {% for stamp in stamps %}
+    const canvas_{{ stamp.id }} = document.getElementById("canvas_{{ stamp.id }}");
+    const ctx_{{ stamp.id }} = canvas_{{ stamp.id }}.getContext("2d");
+
+    let image_{{ stamp.id }} = new Image();
+    image_{{ stamp.id }}.src = "{{ stamp.stamp_image.url }}";
+
+    image_{{ stamp.id }}.onload = () => {
+      const canvas_width = canvas_{{ stamp.id }}.width;
+      const canvas_height = canvas_{{ stamp.id }}.height;
+      const image_width = image_{{ stamp.id }}.width;
+      const image_height = image_{{ stamp.id }}.height;
+      const { draw_width, draw_height } = calculate_image_size(image_width, image_height, canvas_width, canvas_height);
+
+      const x = (canvas_width - draw_width) / 2;
+      const y = (canvas_height - draw_height) / 2;
+
+      ctx_{{ stamp.id }}.drawImage(image_{{ stamp.id }}, x, y, draw_width, draw_height)
+    };
+  {% endfor %}
+</script>
+{% endblock script %}

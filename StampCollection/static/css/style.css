@@ -1,10 +1,19 @@
 @charset "utf-8";
 
-#map {
-    height: 500px;
-    width: 500px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.stamp {
+  display: flex;
+}
+.stamp .stamp_text {
+  margin: 0 0 0 20px;
+  padding: 0;
+}
+.stamp .stamp_title {
+  margin: 0;
+  padding: 0;
+  font-weight: bold;
+  font-size: 18px;
+}
+.stamp .stamp_description {
+  margin: 10px 0 0;
+  padding: 0;
 }

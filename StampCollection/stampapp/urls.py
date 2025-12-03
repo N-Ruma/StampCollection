@@ -5,4 +5,5 @@ from .views import *
 urlpatterns = [
     path("", home_view, name="home"),
     path("add_stamp_pin", add_stamp_pin_view, name="add_stamp_pin"),
+    path("test_js", test_js_view, name="test_js"),
 ]
