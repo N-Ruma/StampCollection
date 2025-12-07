@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import StampPin
+from .models import *
 
 class StampPinForm(ModelForm):
     class Meta:
@@ -9,5 +9,5 @@ class StampPinForm(ModelForm):
             "name",
             "latitude",
             "longitude",
-            "stamp_image",
+            "stamp_image"
         ]

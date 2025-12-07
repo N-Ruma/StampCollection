@@ -6,4 +6,5 @@ urlpatterns = [
     path("", home_view, name="home"),
     path("add_stamp_pin", add_stamp_pin_view, name="add_stamp_pin"),
     path("test_js", test_js_view, name="test_js"),
+    path("get_stamp", get_stamp_view, name="get_stamp"),
 ]

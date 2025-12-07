@@ -37,3 +37,25 @@ def test_js_view(request):
     stamps = StampPin.objects.all()
     context["stamps"] = stamps
     return render(request, template_name, context)
+
+@login_required
+def get_stamp_view(request):
+    template_name = "stampapp/get_stamp.html"
+    context = {}
+    user = request.user
+    if request.method == "POST":
+        id = request.POST.get("id")
+        try:
+            stamp = StampPin.objects.get(id=id)
+        except StampPin.DoesNotExist as e:
+            context["error"] = f"{e}"
+        else:
+            stamp.users.add(user)
+            context["message"] = "You Got Stamp!"
+
+    stamps = StampPin.objects.all()
+    context["stamps"] = stamps
+
+    own_stamps = user.stamppin_set.all() # type: ignore
+    context["own_stamps"] = own_stamps
+    return render(request, template_name, context)
