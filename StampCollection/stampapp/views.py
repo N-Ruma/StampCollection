@@ -4,8 +4,6 @@ from django.contrib.auth import get_user_model
 from django.core.files.base import ContentFile
 from PIL import Image, ImageFilter, ImageOps
 import io
-from .models import StampPin
-from django.db import models
 
 from .models import *
 from .forms import *
@@ -37,7 +35,6 @@ def add_stamp_pin_view(request):
     if request.method == "POST":
         form = StampPinForm(request.POST, request.FILES)
         if form.is_valid():
-            # -------------------------- データ追加処理 --------------------------
             form.save()
             return redirect("home")
     else:
@@ -48,13 +45,10 @@ def add_stamp_pin_view(request):
 @login_required
 def mypage_view(request):
     template_name = "stampapp/mypage.html"
-
+    context = {}
     # 現在ログインしているユーザーが獲得しているスタンプ
     my_stamps = StampPin.objects.filter(users=request.user)
-
-    context = {
-        "my_stamps": my_stamps,
-    }
+    context["my_stamps"] = my_stamps
     return render(request, template_name, context)
     
 @login_required
@@ -68,6 +62,8 @@ def test_js_view(request):
 @login_required
 def get_stamp_view(request):
     template_name = "stampapp/get_stamp.html"
+    context = {}
+    
     user = request.user
 
     message = None
@@ -90,15 +86,42 @@ def get_stamp_view(request):
 
     # 全スタンプ一覧
     stamps = StampPin.objects.all()
-
+    context["stamps"] = stamps
+    
     # 自分の獲得スタンプ
     own_stamps = StampPin.objects.filter(users=user)
+    context["own_stamps"] = own_stamps
+    
+    context["message"] = message
+    context["error"] = error
+    
+    return render(request, template_name, context)
+  
+@login_required
+def stamp_list_view(request):
+    template_name = "stampapp/stamp_list.html"
+    context = {}
+    
+    stamps = StampPin.objects.all()
+    context["stamps"] = stamps
+    
+    return render(request, template_name, context)
 
-    context = {
-        "stamps": stamps,
-        "own_stamps": own_stamps,
-        "message": message,
-        "error": error,
-    }
+def map_view(request):
+    template_name = "stampapp/map_view.html"
+    context = {}
+    
+    stamps = StampPin.objects.all()
+    context["stamps"] = stamps
+    
+    return render(request, template_name, context)
 
+@login_required
+def stamp_detail_view(request, stamp_id):
+    template_name = "stampapp/stamp_detail.html"
+    context = {}
+    
+    stamp = StampPin.objects.get(id=stamp_id)
+    context["stamp"] = stamp
+    
     return render(request, template_name, context)

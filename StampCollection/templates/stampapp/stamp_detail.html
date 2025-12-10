@@ -1,0 +1,14 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h2>{{ stamp.name }}</h2>
+
+<img src="{{ stamp.stamp_image.url }}" width="300" style="border-radius:20px;">
+<p>緯度: {{ stamp.latitude }}</p>
+<p>経度: {{ stamp.longitude }}</p>
+
+<div><a href="{% url 'stamp_list' %}">← スタンプ一覧へ戻る</a></div>
+
+{% endblock content %}

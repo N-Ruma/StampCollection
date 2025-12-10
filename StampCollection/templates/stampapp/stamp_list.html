@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<style>
+  .grid { display:grid; grid-template-columns:1fr 1fr; width:90%; margin:20px auto; border:1px solid #000; }
+  .cell { border:1px solid #000; text-align:center; padding:20px; }
+  .circle-img { width:160px; height:160px; border-radius:50%; object-fit:cover; }
+  .unknown { width:160px; height:160px; border-radius:50%; border:2px solid #333;
+             font-size:60px; display:flex; align-items:center; justify-content:center; margin:0 auto; }
+</style>
+
+<h2>スタンプ一覧</h2>
+
+<div class="grid">
+  {% for stamp in stamps %}
+    <div class="cell">
+      {% if stamp.stamp_image %}
+        <a href="{% url 'stamp_detail' stamp.id %}">
+          <img class="circle-img" src="{{ stamp.stamp_image.url }}">
+        </a>
+        <div>{{ stamp.name }}</div>
+
+      {% else %}
+        <div class="unknown">?</div>
+        <div>未取得</div>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
+
+{% endblock content %}
