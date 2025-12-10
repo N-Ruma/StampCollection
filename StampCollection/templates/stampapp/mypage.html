@@ -14,8 +14,8 @@
   {% for own_stamp in own_stamps %}
   <div style="width: 150px; text-align: center;">
       <img src="{{ own_stamp.stamp_image.url }}" 
-           style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover;">
-      <p>{{ own_stamp.name }}</p>
+           style="width: 120px; height: 120px; border-radius: 10px; object-fit: cover;">
+      <p>{{ own_stamp }}</p>
   </div>
   {% empty %}
   <p>まだスタンプを獲得していません。</p>

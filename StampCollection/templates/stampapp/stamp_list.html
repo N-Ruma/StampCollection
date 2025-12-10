@@ -15,7 +15,7 @@
       <div class="stamp-wrapper">
         <span class="got-badge">GOT</span>
         <a href="{% url 'stamp_detail' own_stamp %}">
-          <img class="circle-img" src="{{ own_stamp.stamp_image.url }}">
+          <img class="rsquare-img" src="{{ own_stamp.stamp_image.url }}">
         </a>
       </div>
       <div class="stamp-name">{{ own_stamp }}</div>
@@ -26,7 +26,7 @@
       <div class="stamp-wrapper">
         <span class="unknown_badge">UNKNOWN</span>
         <a href="{% url 'stamp_detail' unknown_stamp %}">
-          <canvas class="circle-img" id="canvas_{{ unknown_stamp.id }}"></canvas>
+          <canvas class="rsquare-img" id="canvas_{{ unknown_stamp.id }}"></canvas>
         </a>
       </div>
       <div class="stamp-name">{{ unknown_stamp }}</div>

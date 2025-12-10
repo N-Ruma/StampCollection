@@ -121,7 +121,11 @@ def stamp_detail_view(request, stamp):
     template_name = "stampapp/stamp_detail.html"
     context = {}
     
-    stamp = StampPin.objects.get(name=stamp)
-    context["stamp"] = stamp
+    own_stamp = StampPin.objects.filter(name=stamp, users=request.user).first()
+    unknown_stamp = StampPin.objects.get(name=stamp)
+    if own_stamp:
+        context["own_stamp"] = own_stamp
+    else:
+        context["unknown_stamp"] = unknown_stamp
     
     return render(request, template_name, context)
