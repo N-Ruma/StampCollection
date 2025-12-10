@@ -51,28 +51,13 @@
   margin: 0 auto 10px;
 }
 
-/* 未取得画像（? の丸） */
-.unknown {
-  width: 160px;
-  height: 160px;
-  border-radius: 50%;
-  background: #eee;
-  color: #999;
-  font-size: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 10px;
-  border: 3px dashed #bbb;
-}
-
 /* 取得済みバッジ */
-.badge {
+.got-badge {
   position: absolute;
   top: 8px;
   right: 8px;
-  background: #4CAF50;
-  color: white;
+  background: rgb(8, 230, 8);
+  color: black;
   padding: 3px 7px;
   border-radius: 8px;
   font-size: 10px;
@@ -85,8 +70,15 @@
 }
 
 /* 未取得テキスト */
-.not-get-text {
-  color: #666;
+.unknown_badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: red;
+  color: white;
+  padding: 3px 7px;
+  border-radius: 8px;
+  font-size: 10px;
 }
 
 /* スマホ向け調整 */

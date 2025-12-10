@@ -18,11 +18,11 @@
 
 <h3>人気スポット上位3件</h3>
 <ol class="popular-ranking">
-  {% for stamp in popular_stamps %}
+  {% for popular_stamp in popular_stamps %}
     <li>
-      <a href="{% url 'stamp_detail' stamp %}">{{ stamp }}</a>
-      <span class="spot-name">{{ stamp }}</span>
-      （獲得人数: {{ stamp.users.count }}）
+      <a href="{% url 'stamp_detail' popular_stamp %}">{{ popular_stamp }}</a>
+      <span class="spot-name">{{ popular_stamp }}</span>
+      （獲得人数: {{ popular_stamp.users.count }}）
     </li>
   {% empty %}
     <p>データがありません。</p>

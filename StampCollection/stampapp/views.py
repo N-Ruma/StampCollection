@@ -2,30 +2,25 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.core.files.base import ContentFile
+from django.db.models import Count
 from PIL import Image, ImageFilter, ImageOps
 import io
 
 from .models import *
 from .forms import *
-from .models import StampPin #追加12/4
 
 # 設定されている認証ユーザモデルを取得する.
 User = get_user_model()
 
-from django.db.models import Count
-
 def home_view(request):
     template_name = "stampapp/home.html"
+    context = {}
 
     popular_stamps = (
         StampPin.objects.annotate(user_count=Count("users"))
         .order_by("-user_count")[:3]
     )
-
-    context = {
-         "popular_stamps": popular_stamps
-    }
-
+    context["popular_stamps"] = popular_stamps
     return render(request, template_name, context)
 
 
@@ -48,10 +43,11 @@ def mypage_view(request):
     template_name = "stampapp/mypage.html"
     context = {}
     # 現在ログインしているユーザーが獲得しているスタンプ
-    my_stamps = StampPin.objects.filter(users=request.user)
-    context["my_stamps"] = my_stamps
+    own_stamps = StampPin.objects.filter(users=request.user)
+    context["own_stamps"] = own_stamps
     return render(request, template_name, context)
     
+# for debug
 @login_required
 def test_js_view(request):
     template_name = "stampapp/test_js.html"
@@ -66,13 +62,11 @@ def get_stamp_view(request):
     context = {}
     
     user = request.user
-
     message = None
     error = None
 
     if request.method == "POST":
         stamp_id = request.POST.get("id")
-
         try:
             stamp = StampPin.objects.get(id=stamp_id)
         except StampPin.DoesNotExist:
@@ -80,10 +74,10 @@ def get_stamp_view(request):
         else:
             # すでに獲得済みかチェック
             if user in stamp.users.all():
-                message = f"{stamp.name} はすでに獲得済みです。"
+                message = f"{stamp} はすでに獲得済みです。"
             else:
                 stamp.users.add(user)
-                message = f"{stamp.name} を獲得しました！"
+                message = f"{stamp} を獲得しました！"
 
     # 全スタンプ一覧
     stamps = StampPin.objects.all()
@@ -103,9 +97,14 @@ def stamp_list_view(request):
     template_name = "stampapp/stamp_list.html"
     context = {}
     
-    stamps = StampPin.objects.all()
-    context["stamps"] = stamps
+    user = request.user
+
+    own_stamps = StampPin.objects.filter(users=user)
+    context["own_stamps"] = own_stamps
     
+    unknown_stamps = StampPin.objects.exclude(users=user)
+    context["unknown_stamps"] = unknown_stamps
+
     return render(request, template_name, context)
 
 def map_view(request):

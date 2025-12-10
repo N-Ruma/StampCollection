@@ -1,28 +1,44 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/stamp_list.css' %}">
+  <script src='{% static "js/script.js" %}'></script>
+{% endblock head %}
+
 {% block content %}
-
-<link rel="stylesheet" href="{% static 'css/stamp_list.css' %}">
-
 <h1 class="page-title">スタンプ一覧</h1>
 
 <div class="grid">
-  {% for stamp in stamps %}
+  {% for own_stamp in own_stamps %}
     <div class="cell">
-      {% if stamp.stamp_image %}
-        <!-- 取得済みカード -->
-        <div class="stamp-wrapper">
-          <span class="badge">GET</span>
-          <a href="{% url 'stamp_detail' stamp %}"><img class="circle-img" src="{{ stamp.stamp_image.url }}"></a>
-        </div>
-        <div class="stamp-name">{{ stamp }}</div>
-      {% else %}
-        <!-- 未取得カード -->
-        <div class="unknown">?</div>
-        <div class="not-get-text">未取得</div>
-      {% endif %}
+      <div class="stamp-wrapper">
+        <span class="got-badge">GOT</span>
+        <a href="{% url 'stamp_detail' own_stamp %}">
+          <img class="circle-img" src="{{ own_stamp.stamp_image.url }}">
+        </a>
+      </div>
+      <div class="stamp-name">{{ own_stamp }}</div>
+    </div>
+  {% endfor %}
+  {% for unknown_stamp in unknown_stamps %}
+    <div class="cell">
+      <div class="stamp-wrapper">
+        <span class="unknown_badge">UNKNOWN</span>
+        <a href="{% url 'stamp_detail' unknown_stamp %}">
+          <canvas class="circle-img" id="canvas_{{ unknown_stamp.id }}"></canvas>
+        </a>
+      </div>
+      <div class="stamp-name">{{ unknown_stamp }}</div>
     </div>
   {% endfor %}
 </div>
 {% endblock content %}
+
+{% block script %}
+<script>
+  {% for unknown_stamp in unknown_stamps %}
+    draw_image({{ unknown_stamp.id  }}, "{{ unknown_stamp.stamp_image.url }}")
+  {% endfor %}
+</script>
+{% endblock script %}
