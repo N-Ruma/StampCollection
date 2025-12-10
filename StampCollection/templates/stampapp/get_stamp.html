@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+  <h1>get stamp</h1>
+{% endblock title %}
+
+{% block content %}
+  {% if error %}
+    <p><font color="red">{{ error }}</font></p>
+  {% endif %}
+  {% if message %}
+    <p>{{ message }}</p>
+  {% endif %}
+  
+  {% for stamp in stamps %}
+    <form method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="id" value="{{ stamp.id }}">
+      <button type="submit">{{ stamp }}</button>
+    </form>
+  {% endfor %}
+  <h2>Your Own Stamps:</h2>
+  {% for own_stamp in own_stamps %}
+    <p>{{ own_stamp }}</p>
+  {% endfor %}
+{% endblock content %}
+
+{% block redirect %}
+  <div><a href="{% url 'home' %}">ホーム</a></div>
+{% endblock redirect %}

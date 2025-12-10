@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<script src='{% static "js/script.js" %}'></script>
+<link rel="stylesheet" href='{% static "css/style.css" %}'>
+{% endblock head %}
+
+{% block title %}
+  <h1>test js</h1>
+{% endblock title %}
+
+{% block content %}
+  {% for stamp in stamps %}
+    <div class="stamp">
+      <canvas class="stamp_image" class="img-thumbnail" id="canvas_{{ stamp.id }}" width="300" height="300"></canvas>
+      <div class="stamp_text">
+        <p class="stamp_title">{{ stamp }}</p><br>
+        <p class="stamp_description">discription: latitude: {{ stamp.latitude }}, longitude: {{ stamp.longitude }}</p>
+      </div>
+    </div>
+  {% endfor %}
+{% endblock content %}
+
+{% block redirect %}
+{% endblock redirect %}
+
+{% block script %}
+<script>
+  {% for stamp in stamps %}
+    draw_image({{ stamp.id }}, "{{ stamp.stamp_image.url }}")
+  {% endfor %}
+</script>
+{% endblock script %}

@@ -8,3 +8,16 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
+.popular-ranking {
+    padding-left: 20px;
+}
+
+.popular-ranking li {
+    margin-bottom: 12px;
+}
+
+.popular-ranking .spot-name {
+    font-size: 1.6em;
+    font-weight: bold;
+}
