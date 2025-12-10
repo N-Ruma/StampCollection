@@ -1,20 +1,20 @@
 {% extends "base.html" %}
 
 {% block title %}
-<h1>アカウント作成</h1>
+  <h1>アカウント作成</h1>
 {% endblock title %}
 
 {% block content %}
-<form method="POST" action="{% url 'register' %}">
-{% csrf_token %}
-{{ form }}
-<button>登録</button>
-</form>
+  <form method="POST" action="{% url 'register' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button>登録</button>
+  </form>
 {% endblock content %}
 
 {% block redirect %}
-<p><a href="{% url 'home' %}">ホーム</a></p>
-<p><a href="{% url 'login' %}">ログイン</a></p>
+  <div><a href="{% url 'home' %}">ホーム</a></div>
+  <div><a href="{% url 'login' %}">ログイン</a></div>
 {% endblock redirect %}
 
 {% block script %}{% endblock script %}
