@@ -17,3 +17,130 @@
   margin: 10px 0 0;
   padding: 0;
 }
+
+/* =========================================================
+   スタンプ詳細ページ（detail.html）
+   ========================================================= */
+.stamp_detail_container {
+    width: 350px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #999;
+    background: #fff;
+    text-align: center;
+    border-radius: 8px;
+}
+
+/* 画像表示枠 */
+.stamp_image_wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+/* canvasを丸く見せる */
+.stamp_image_wrapper canvas,
+.locked_wrapper canvas {
+    border-radius: 50%;
+    border: 3px solid #ccc;
+}
+
+/* 未取得のときのグレー加工 */
+.locked {
+    filter: grayscale(100%);
+}
+
+/* 未取得のときの「＋」アイコン */
+.locked_wrapper {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    cursor: pointer;
+}
+
+.plus_icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 65px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.6);
+}
+
+/* スタンプ名 */
+.stamp_title {
+    font-size: 22px;
+    margin-top: 15px;
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+/* 説明文 */
+.stamp_description {
+    font-size: 14px;
+    color: #444;
+}
+
+/* アップロードフォーム */
+#uploadForm {
+    margin-top: 20px;
+}
+
+.upload_button {
+    margin-top: 10px;
+    padding: 8px 15px;
+    background: #0066cc;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+}
+.upload_button:hover {
+    background: #004c99;
+}
+
+/* =========================================================
+   スタンプ獲得通知ページ（get_stamp.html）
+   ========================================================= */
+.stamp_get_container {
+    width: 350px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #999;
+    background: #fff;
+    text-align: center;
+    border-radius: 8px;
+}
+
+/* 取得時の画像枠 */
+.stamp_get_image_wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.stamp_get_image_wrapper canvas {
+    border-radius: 50%;
+    border: 3px solid #ccc;
+}
+
+/* 「取得しました」メッセージ */
+.get_stamp_title {
+    font-size: 20px;
+    margin-bottom: 20px;
+}
+
+/* 戻るリンク */
+.back_link_wrapper {
+    margin-top: 10px;
+}
+
+.back_link {
+    color: #0066cc;
+    text-decoration: underline;
+}
+
+.back_link:hover {
+    color: #004c99;
+}

@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+ {% load static %}
+
+ {% block head %} 
+ <script src='{% static "js/script.js" %}'></script>
+ <link rel="stylesheet" href='{% static "css/style.css" %}'> 
+ {% endblock head %} 
+ 
+ {% block title %} 
+ <h1>スタンプ詳細</h1> 
+ {% endblock title %}
+
+ {% block content %} 
+ <div class="stamp_detail_container">
+
+     <!-- 画像表示エリア --> 
+      <div class="stamp_image_wrapper"> 
+        
+        {% if user_has_stamp %} 
+           <!-- 取得済み（カラー） --> 
+           <canvas id="canvas_{{ stamp.id }}" width="300" height="300"></canvas>
+
+        {% else %} 
+        <!-- 未取得（グレー & ＋アイコン） --> 
+         <div class="locked_wrapper" onclick="showUploadForm()"> <canvas id="canvas_{{ stamp.id }}" class="locked" width="300" height="300"></canvas>
+             <div class="plus_icon">＋</div> </div> 
+             {% endif %} 
+            </div> 
+            
+        {% if user_has_stamp %} 
+           <!-- スタンプ名・説明（取得済みのみ表示） --> 
+           <h2 class="stamp_title">{{ stamp.name }}</h2>
+           <p class="stamp_description">{{ stamp.description }}</p> 
+        {% endif %} 
+        
+        <!-- 未取得時のアップロードフォーム（＋を押すと表示） --> 
+        {% if not user_has_stamp %} 
+        <div id="uploadForm" style="display:none; margin-top:20px;"> 
+            <form method="POST" enctype="multipart/form-data"> 
+                {% csrf_token %} 
+                <input type="file" name="upload_image" accept="image/*" required> 
+                <button type="submit" class="upload_button">アップロードして判定</button> 
+            </form> 
+        </div> 
+    </div> 
+    {% endblock content %} 
+    
+    {% block redirect %} 
+    {% endblock redirect %} 
+    
+    {% block script %} 
+    <script> 
+    draw_image({{ stamp.id }}, "{{ stamp.stamp_image.url }}"); function showUploadForm() { document.getElementById("uploadForm").style.display = "block"; } 
+    </script> 
+    {% endblock script %}

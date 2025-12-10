@@ -1,31 +1,30 @@
-{% extends "base.html" %}
-{% load static %}
+{% extends "base.html" %} 
+{% load static %} 
 
-{% block title %}
-  <h1>get stamp</h1>
-{% endblock title %}
+{% block title %} 
+<h1>スタンプ獲得通知</h1> 
+{% endblock title %} 
 
-{% block content %}
-  {% if error %}
-    <p><font color="red">{{ error }}</font></p>
-  {% endif %}
-  {% if message %}
-    <p>{{ message }}</p>
-  {% endif %}
+{% block content %} 
+<div class="stamp_get_container"> 
+  {% if error %} 
+     <p><font color="red">{{ error }}</font></p> 
+  {% endif %} 
   
-  {% for stamp in stamps %}
-    <form method="POST">
-      {% csrf_token %}
-      <input type="hidden" name="id" value="{{ stamp.id }}">
-      <button type="submit">{{ stamp }}</button>
-    </form>
-  {% endfor %}
-  <h2>Your Own Stamps:</h2>
-  {% for own_stamp in own_stamps %}
-    <p>{{ own_stamp }}</p>
-  {% endfor %}
-{% endblock content %}
+  {% if message %} 
+     <p>{{ message }}</p> 
+  {% endif %} 
+  
+  <div class="stamp_get_image_wrapper"> 
+    <canvas id="canvas_{{ stamp.id }}" width="300" height="300"></canvas> 
+  </div> 
+  
+  <h2 class="get_stamp_title">「{{ stamp.name }}」を取得しました！</h2> 
+  
+  <div class="back_link_wrapper"> 
+    <a href="{% url 'detail' stamp.id %}" class="back_link">スタンプの詳細画面に戻る</a> 
+  </div> 
+</div> 
 
-{% block redirect %}
-  <div><a href="{% url 'home' %}">ホーム</a></div>
-{% endblock redirect %}
+{% endblock content %} 
+
