@@ -13,6 +13,48 @@
 {% endblock title %}
 
 {% block content %}
+
+<hr>
+
+<h3>人気スポット上位3件</h3>
+<ol class="popular-ranking">
+  {% for pin in popular_stamps %}
+    <li>
+      {#<a href="{% url 'stamp_detail' pin.id %}">{{ pin.name }}</a>#}
+
+      <span class="spot-name">{{ pin.name }}</span>
+      （獲得人数: {{ pin.users.count }}）
+
+    </li>
+  {% empty %}
+    <p>データがありません。</p>
+  {% endfor %}
+</ol>
+
+
+<br><br>
+
+<div style="display:flex; justify-content:center; gap:80px;">
+
+{# <a href="{% url 'stamp_list' %}"><img src="{% static 'img/stamp_icon.png' %}" width="120"><div>スタンプ一覧</div></a> #}
+
+
+<div style="text-align:center;">
+  <img src="{% static 'img/stamp_icon.png' %}" width="120">
+  <div>スタンプ一覧</div>
+</div>
+
+
+{# <a href="{% url 'map_all' %}"><img src="{% static 'img/map_icon.png' %}" width="160"><div>全体マップ</div></a> #}
+
+
+<div style="text-align:center;">
+  <img src="{% static 'img/map_icon.png' %}" width="160">
+  <div>全体マップ</div>
+</div>
+  
+</div>
+
 {% endblock content %}
 
 {% block redirect %}
@@ -21,6 +63,7 @@
       {% csrf_token %}
       <button>ログアウト</button>
     </form>
+    <div><a href="{% url 'mypage' %}">マイページ</a></div>
     <div><a href="{% url 'add_stamp_pin' %}">マップピンを追加</a></div>
   {% else %}
     <div><a href="{% url 'login' %}">ログイン</a></div>
