@@ -5,30 +5,24 @@
 
 <link rel="stylesheet" href="{% static 'css/stamp_list.css' %}">
 
-<h2 class="page-title">スタンプ一覧</h2>
+<h1 class="page-title">スタンプ一覧</h1>
 
 <div class="grid">
   {% for stamp in stamps %}
     <div class="cell">
-
       {% if stamp.stamp_image %}
         <!-- 取得済みカード -->
         <div class="stamp-wrapper">
           <span class="badge">GET</span>
-          <a href="{% url 'stamp_detail' stamp.id %}">
-            <img class="circle-img" src="{{ stamp.stamp_image.url }}">
-          </a>
+          <a href="{% url 'stamp_detail' stamp.id %}"><img class="circle-img" src="{{ stamp.stamp_image.url }}"></a>
         </div>
         <div class="stamp-name">{{ stamp.name }}</div>
-
       {% else %}
         <!-- 未取得カード -->
         <div class="unknown">?</div>
         <div class="not-get-text">未取得</div>
       {% endif %}
-
     </div>
   {% endfor %}
 </div>
-
 {% endblock content %}
