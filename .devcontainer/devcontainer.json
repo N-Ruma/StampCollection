@@ -9,9 +9,6 @@
 		"dockerfile": "../Dockerfile"
 	},
 
-        "workspaceFolder": "/workspaces/StampCollection",
-        "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/StampCollection,type=bind",
-
 	// Features to add to the dev container. More info: https://containers.dev/features.
 	// "features": {},
 

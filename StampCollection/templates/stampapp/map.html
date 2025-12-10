@@ -38,17 +38,17 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 // スタンプのピンを追加し、詳細ページに遷移するための処理(12/9追加)
-{% for s in stamps %}
+{% for stamp in stamps %}
     // マーカー作成
-    let marker = L.marker([{{ s.latitude }}, {{ s.longitude }}]).addTo(map);
+    let marker = L.marker([{{ stamp.latitude }}, {{ stamp.longitude }}]).addTo(map);
 
     // クリックで詳細ページに移動
     marker.on("click", function() {
-        window.location.href = "{% url 'stamp_detail' stamp_id=s.id %}";
+        window.location.href = "{% url 'stamp_detail' stamp_id=stamp.id %}";
     });
 
     // ふきだし（クリック不要）
-    marker.bindPopup("<b>{{ s.name }}</b>");
+    marker.bindPopup("<b>{{ stamp.name }}</b>");
 {% endfor %}
 </script>
 {% endblock script %}
