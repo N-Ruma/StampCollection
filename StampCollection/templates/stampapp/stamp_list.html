@@ -35,6 +35,10 @@
 </div>
 {% endblock content %}
 
+{% block redirect %}
+<a href='{% url "home" %}'>ホーム</a>
+{% endblock redirect %}
+
 {% block script %}
 <script>
   {% for unknown_stamp in unknown_stamps %}
