@@ -118,11 +118,11 @@ def map_view(request):
     return render(request, template_name, context)
 
 @login_required
-def stamp_detail_view(request, stamp_id):
+def stamp_detail_view(request, stamp):
     template_name = "stampapp/stamp_detail.html"
     context = {}
     
-    stamp = StampPin.objects.get(id=stamp_id)
+    stamp = StampPin.objects.get(name=stamp)
     context["stamp"] = stamp
     
     return render(request, template_name, context)
