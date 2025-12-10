@@ -1,0 +1,104 @@
+/* ページタイトル */
+.page-title {
+  text-align: center;
+  margin: 20px 0 10px;
+  font-size: 26px;
+  font-weight: bold;
+}
+
+/* 達成率 */
+.progress {
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* グリッド配置 */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 20px;
+  width: 90%;
+  margin: 20px auto;
+}
+
+/* スタンプのセル（カード） */
+.cell {
+  border-radius: 12px;
+  padding: 20px 10px;
+  text-align: center;
+  position: relative;
+  border: 1px solid #ccc;
+}
+
+/* 交互の背景色 */
+.cell:nth-child(odd) {
+  background: #e5e5e5; /* グレー寄り */
+}
+
+.cell:nth-child(even) {
+  background: #ffffff; /* 白 */
+}
+
+/* 取得済み画像 */
+.circle-img {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 10px;
+}
+
+/* 未取得画像（? の丸） */
+.unknown {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: #eee;
+  color: #999;
+  font-size: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px;
+  border: 3px dashed #bbb;
+}
+
+/* 取得済みバッジ */
+.badge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #4CAF50;
+  color: white;
+  padding: 3px 7px;
+  border-radius: 8px;
+  font-size: 10px;
+}
+
+/* スタンプ名 */
+.stamp-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* 未取得テキスト */
+.not-get-text {
+  color: #666;
+}
+
+/* スマホ向け調整 */
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  .circle-img,
+  .unknown {
+    width: 120px;
+    height: 120px;
+  }
+}

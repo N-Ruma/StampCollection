@@ -1,0 +1,30 @@
+.register-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.register-card {
+  width: 420px;
+  padding: 25px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.register-title {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.register-links {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.register-links a {
+  display: block;
+  margin: 4px 0;
+}

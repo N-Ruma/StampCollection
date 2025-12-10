@@ -1,0 +1,33 @@
+
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/stamp_detail.css' %}">
+{% endblock head %}
+
+{% block content %}
+
+<div class="detail-container">
+
+    <!-- 角丸の大きい画像 -->
+    <div class="detail-image">
+        <img src="{{ stamp.stamp_image.url }}" alt="{{ stamp.name }}">
+    </div>
+
+    <h2 class="detail-title">{{ stamp.name }}</h2>
+
+    <p class="detail-description">
+        {{ stamp.description|default:"このスポットに関する説明が入ります。" }}
+    </p>
+
+    <div class="location-info">
+        <p>緯度：{{ stamp.latitude }}</p>
+        <p>経度：{{ stamp.longitude }}</p>
+    </div>
+
+    <a href="{% url 'stamp_list' %}" class="back-link">← スタンプ一覧へ戻る</a>
+
+</div>
+
+{% endblock content %}

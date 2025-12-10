@@ -1,0 +1,65 @@
+/* マップのサイズ */
+#map {
+  height: 90vh;
+  width: 100%;
+}
+
+/* カードデザイン */
+.stamp-card {
+position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);  /* 中央にするポイント */
+
+  width: 320px;
+  background: white;
+  padding: 18px;
+  border-radius: 14px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.25);
+  z-index: 9999;
+  font-size: 15px;
+}
+
+.stamp-card h1 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.stamp-card p {
+  margin: 6px 0;
+}
+
+.stamp-card label {
+  font-weight: bold;
+}
+
+.stamp-card input {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 4px;
+}
+
+.stamp-card button {
+  width: 100%;
+  padding: 8px;
+  margin-top: 12px;
+  background: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.back-home {
+  margin-top: 12px;
+  text-align: center;
+}
+
+.back-home a {
+  color: #007bff;
+  text-decoration: none;
+  font-size: 14px;
+}

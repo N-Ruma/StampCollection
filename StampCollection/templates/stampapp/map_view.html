@@ -3,7 +3,6 @@
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'leaflet/leaflet.css' %}">
-<link rel="stylesheet" href="{% static 'css/add_stamp_pin.css' %}">
 <style>
   #map { height: 90vh; width: 100%; }
   .header { display:flex; justify-content:space-between; align-items:center; padding:10px; }
@@ -25,38 +24,6 @@
 
 {% block content %}
 <div id="map"></div>
-
-<div class="stamp-card">
-  <h2>スタンプの追加</h2>
-
-  {% if form.errors %}
-    {% for key, errors in form.errors.items %}
-      {% for error in errors %}
-        <p class="error-text">{{ error }}</p>
-      {% endfor %}
-    {% endfor %}
-  {% endif %}
-
-  <form method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-
-    <label for="name">スタンプ名:</label>
-    {{ form.name }}
-
-    <label for="latitude">緯度:</label>
-    {{ form.latitude }}
-
-    <label for="longitude">経度:</label>
-    {{ form.longitude }}
-
-    <label for="stamp_image">スタンプ画像:</label>
-    {{ form.stamp_image }}
-
-    <button type="submit">追加</button>
-  </form>
-
-  <a href="{% url 'home' %}" class="home-link">ホームへ戻る</a>
-</div>
 {% endblock content %}
 
 {% block script %}
