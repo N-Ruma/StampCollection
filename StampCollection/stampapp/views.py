@@ -7,7 +7,6 @@ import io
 
 from .models import *
 from .forms import *
-from .models import StampPin #追加12/4
 
 # 設定されている認証ユーザモデルを取得する.
 User = get_user_model()
@@ -43,7 +42,6 @@ def test_js_view(request):
 def stamp_list_view(request):
     stamps = StampPin.objects.all()
     return render(request, "stampapp/stamp_list.html", {"stamps": stamps})
-
 
 def map_view(request):
     stamps = StampPin.objects.all()
