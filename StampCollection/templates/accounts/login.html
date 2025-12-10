@@ -1,20 +1,29 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock head %}
 
 {% block title %}
-  <h1>アカウントログイン</h1>
+<h1 class="login-title">アカウントログイン</h1>
 {% endblock title %}
 
 {% block content %}
-  <form method="POST" action="{% url 'login' %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button>ログイン</button>
-  </form>
+<div class="login-container">
+  <div class="login-card">
+
+    <form method="POST" action="{% url 'login' %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn btn-primary w-100 mt-3">ログイン</button>
+    </form>
+
+    <div class="login-links">
+      <a href="{% url 'home' %}">ホームへ戻る</a>
+      <a href="{% url 'register' %}">新規登録</a>
+    </div>
+
+  </div>
+</div>
 {% endblock content %}
-
-{% block redirect %}
-  <div><a href="{% url 'home' %}">ホーム</a></div>
-  <div><a href="{% url 'register' %}">登録</a></div>
-{% endblock redirect %}
-
-{% block script %}{% endblock script %}

@@ -7,6 +7,7 @@ import io
 
 from .models import *
 from .forms import *
+from .models import StampPin #追加12/4
 
 # 設定されている認証ユーザモデルを取得する.
 User = get_user_model()

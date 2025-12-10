@@ -1,0 +1,57 @@
+/* ===========================
+   スタンプ詳細ページデザイン
+   =========================== */
+
+.detail-container {
+    width: 90%;
+    max-width: 500px;
+    margin: 30px auto;
+    text-align: center;
+    position: relative;
+    padding-bottom: 40px;
+}
+
+/* 戻るリンク */
+.back-link {
+    display: block;
+    text-align: left;
+    margin-bottom: 15px;
+    color: #333;
+    font-size: 14px;
+    text-decoration: none;
+}
+.back-link:hover {
+    opacity: 0.7;
+}
+
+
+/* ▼ 角丸画像（元コードを発展） */
+.detail-image img {
+    width: 400px;         /* ← ここでサイズ変更できます（320〜360推奨） */
+    max-width: 90%;
+    border-radius: 20px;  /* ← 元の角丸をそのまま使用 */
+    object-fit: cover;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    margin: 20px auto;
+}
+
+/* タイトル */
+.detail-title {
+    margin-top: 10px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* 説明 */
+.detail-description {
+    margin: 15px 0;
+    font-size: 16px;
+    color: #444;
+    line-height: 1.6;
+}
+
+/* 緯度経度 */
+.location-info p {
+    font-size: 14px;
+    color: #666;
+}

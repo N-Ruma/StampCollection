@@ -1,41 +1,79 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block head %}
+<link rel="stylesheet" href="{% static 'leaflet/leaflet.css' %}">
+<link rel="stylesheet" href="{% static 'css/add_stamp_pin.css' %}">
+<style>
+  #map { height: 90vh; width: 100%; }
+  .header { display:flex; justify-content:space-between; align-items:center; padding:10px; }
+  .icons img { width:30px; margin-left:10px; cursor:pointer; }
+</style>
+{% endblock head %}
+
 {% block title %}
-  <h1>スタンプの追加</h1>
+<div class="header">
+  <h2>全体マップ</h2>
+  <div class="icons">
+    <a href="{% url 'home' %}"><img src="{% static 'icons/home.png' %}"></a>
+    <a href="{% url 'map_view' %}"><img src="{% static 'icons/map.png' %}"></a>
+    <a href="{% url 'stamp_list' %}"><img src="{% static 'icons/stamp.png' %}"></a>
+    <a href="#"><img src="{% static 'icons/user.png' %}"></a>
+  </div>
+</div>
 {% endblock title %}
 
 {% block content %}
+<div id="map"></div>
+
+<div class="stamp-card">
+  <h2>スタンプの追加</h2>
+
   {% if form.errors %}
     {% for key, errors in form.errors.items %}
       {% for error in errors %}
-        <p><font color="red">{{ error }}</font></p>
+        <p class="error-text">{{ error }}</p>
       {% endfor %}
     {% endfor %}
   {% endif %}
-  
+
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
-    <p>
-      <label for="name">スタンプ名:</label>
-      {{ form.name }}
-    </p>
-    <p>
-      <label for="latitude">緯度:</label>
-      {{ form.latitude }}
-    </p>
-    <p>
-      <label for="longitude">経度:</label>
-      {{ form.longitude }}
-    </p>
-    <p>
-      <label for="stamp_image">スタンプ画像:</label>
-      {{ form.stamp_image }}
-    </p>
+
+    <label for="name">スタンプ名:</label>
+    {{ form.name }}
+
+    <label for="latitude">緯度:</label>
+    {{ form.latitude }}
+
+    <label for="longitude">経度:</label>
+    {{ form.longitude }}
+
+    <label for="stamp_image">スタンプ画像:</label>
+    {{ form.stamp_image }}
+
     <button type="submit">追加</button>
   </form>
+
+  <a href="{% url 'home' %}" class="home-link">ホームへ戻る</a>
+</div>
 {% endblock content %}
 
-{% block redirect %}
-  <div><a href="{% url 'home' %}">ホーム</a></div>
-{% endblock redirect %}
+{% block script %}
+<script src="{% static 'leaflet/leaflet.js' %}"></script>
+<script>
+// マップ作成
+let map = L.map('map').setView([42.316, 140.99], 13);
+
+// タイル
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+// スタンプのピンを追加
+{% for s in stamps %}
+    L.marker([{{ s.latitude }}, {{ s.longitude }}]).addTo(map)
+      .bindPopup("<b>{{ s.name }}</b>");
+{% endfor %}
+</script>
+{% endblock script %}

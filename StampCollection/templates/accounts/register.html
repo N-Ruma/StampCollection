@@ -1,20 +1,41 @@
 {% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/register.css' %}">
+{% endblock head %}
 
 {% block title %}
-  <h1>アカウント作成</h1>
+  <h1 class="register-title">アカウント作成</h1>
 {% endblock title %}
 
 {% block content %}
-  <form method="POST" action="{% url 'register' %}">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button>登録</button>
-  </form>
+<div class="register-container">
+  <div class="register-card">
+
+    <form method="POST" action="{% url 'register' %}">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button class="btn btn-success w-100 mt-3">登録</button>
+    </form>
+
+    <div class="register-links">
+      <a href="{% url 'home' %}">ホーム</a>
+      <a href="{% url 'login' %}">ログイン</a>
+    </div>
+
+  </div>
+</div>
 {% endblock content %}
 
-{% block redirect %}
-  <div><a href="{% url 'home' %}">ホーム</a></div>
-  <div><a href="{% url 'login' %}">ログイン</a></div>
-{% endblock redirect %}
-
-{% block script %}{% endblock script %}
+{% block script %}
+<style>
+    .errorlist {
+        color: red;
+        font-weight: bold;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+</style>
+{% endblock script %}
