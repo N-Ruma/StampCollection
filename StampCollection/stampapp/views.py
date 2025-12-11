@@ -12,6 +12,16 @@ from .forms import *
 # 設定されている認証ユーザモデルを取得する.
 User = get_user_model()
 
+# ------------------ for debug -------------------
+@login_required
+def test_js_view(request):
+    template_name = "stampapp/test_js.html"
+    context = {}
+    stamps = StampPin.objects.all()
+    context["stamps"] = stamps
+    return render(request, template_name, context)
+# -----------------------------------------------
+
 def home_view(request):
     template_name = "stampapp/home.html"
     context = {}
@@ -36,6 +46,9 @@ def add_stamp_pin_view(request):
     else:
         form = StampPinForm()
     context["form"] = form
+
+    stamps = StampPin.objects.all()
+    context["stamps"] = stamps
     return render(request, template_name, context)
 
 @login_required
@@ -47,15 +60,6 @@ def mypage_view(request):
     context["own_stamps"] = own_stamps
     return render(request, template_name, context)
     
-# for debug
-@login_required
-def test_js_view(request):
-    template_name = "stampapp/test_js.html"
-    context = {}
-    stamps = StampPin.objects.all()
-    context["stamps"] = stamps
-    return render(request, template_name, context)
-
 @login_required
 def get_stamp_view(request):
     template_name = "stampapp/get_stamp.html"

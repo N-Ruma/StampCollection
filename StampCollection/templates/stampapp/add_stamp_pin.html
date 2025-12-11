@@ -55,16 +55,33 @@
 {% block script %}
 <script>
 // マップ作成
-let map = L.map('map').setView([42.316, 140.99], 13);
+let map = L.map('map');
 
 // タイル
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; OpenStreetMap contributors'
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
 // スタンプのピンを追加
 {% for stamp in stamps %}
-    L.marker([{{ stamp.latitude }}, {{ stamp.longitude }}]).addTo(map).bindPopup("<b>{{ stamp }}</b>");
+    // マーカー作成
+    let marker_{{ stamp }} = L.marker([{{ stamp.latitude }}, {{ stamp.longitude }}]).addTo(map).bindPopup("<b>{{ stamp }}</b>");
+
+    // クリックで詳細ページに移動
+    marker_{{ stamp }}.on("click", () => {
+        window.location.href = "{% url 'stamp_detail' stamp %}";
+    });
+
+    // マウスをピンに被せたとき, ピンの名前を表示
+    marker_{{ stamp }}.on("mouseover", () => {
+      marker_{{ stamp }}.openPopup();
+    })
+    marker_{{ stamp }}.on("mouseout", () => {
+      marker_{{ stamp }}.closePopup();
+    })
 {% endfor %}
+
+// マップの中心位置の設定
+map.setView([42.316, 140.99], 13);
 </script>
 {% endblock script %}
