@@ -8,6 +8,7 @@
 
 {% block content %}
 <div class="detail-container">
+  {% comment %} スタンプ獲得済み {% endcomment %}
   {% if own_stamp %}
     <div class="detail-image">
       <img src="{{ own_stamp.stamp_image.url }}" alt="{{ own_stamp }}">
@@ -20,7 +21,15 @@
       <p>緯度：{{ own_stamp.latitude }}</p>
       <p>経度：{{ own_stamp.longitude }}</p>
     </div>
+  {% comment %} スタンプ未獲得 {% endcomment %}
   {% elif unknown_stamp %}
+    <form method="POST" action='{% url "judge" %}' enctype="multipart/form-data">
+      {% csrf_token %}
+      <input type="file" name="upload_image" accept="image/png, image/jpeg, image/jpg" required>
+      <input type="hidden" name="stamp" value="{{ unknown_stamp }}">
+      <button type="submit">スタンプを獲得する!</button>
+    </form>
+
     <div class="detail-image">
       <canvas id="canvas_{{ unknown_stamp.id }}"></canvas>
     </div>

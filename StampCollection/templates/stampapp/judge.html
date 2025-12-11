@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+  <link rel="stylesheet" href="{% static 'css/stamp_detail.css' %}">
+  <script src='{% static "js/script.js" %}'></script>
+{% endblock head %}
+
+{% block title %}
+  <h1>スタンプ獲得判定</h1>
+{% endblock title %}
+
+{% block content %}
+<div class="detail-container">
+  {% if stamp %}
+    <div class="detail-image">
+      <img src="{{ stamp.stamp_image.url }}" alt="{{ stamp }}">
+    </div>
+    <h2 class="detail-title">{{ stamp }}</h2>
+  {% endif %}
+  {% for message in messages %}
+    <p class="detail-description">{{ message }}</p>
+  {% endfor %}
+</div>
+{% endblock content %}
+
+{% block script %}
+<script>
+  {% if stamp %}
+    draw_image({{ stamp.id }}, "{{ stamp.stamp_image.url }}")
+  {% endif %}
+</script>
+{% endblock script %}
+
+{% block redirect %}
+  <div><a href="{% url 'stamp_list' %}">スタンプ一覧</a></div>
+{% endblock redirect %}
