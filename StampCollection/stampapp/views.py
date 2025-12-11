@@ -12,53 +12,6 @@ from .judge import judge
 # 設定されている認証ユーザモデルを取得する.
 User = get_user_model()
 
-# ------------------ for debug -------------------
-@login_required
-def test_js_view(request):
-    template_name = "stampapp/test_js.html"
-    context = {}
-    stamps = StampPin.objects.all()
-    context["stamps"] = stamps
-    return render(request, template_name, context)
-
-@login_required
-def get_stamp_view(request):
-    template_name = "stampapp/get_stamp.html"
-    context = {}
-    
-    user = request.user
-    message = None
-    error = None
-
-    if request.method == "POST":
-        stamp_id = request.POST["id"]
-        try:
-            stamp = StampPin.objects.get(id=stamp_id)
-        except StampPin.DoesNotExist:
-            error = "スタンプが存在しません。"
-        else:
-            # すでに獲得済みかチェック
-            if user in stamp.users.all():
-                message = f"{stamp} はすでに獲得済みです。"
-            else:
-                stamp.users.add(user)
-                message = f"{stamp} を獲得しました！"
-
-    # 全スタンプ一覧
-    stamps = StampPin.objects.all()
-    context["stamps"] = stamps
-    
-    # 自分の獲得スタンプ
-    own_stamps = StampPin.objects.filter(users=user)
-    context["own_stamps"] = own_stamps
-    
-    context["message"] = message
-    context["error"] = error
-    
-    return render(request, template_name, context)
-  
-# -----------------------------------------------
-
 def home_view(request):
     template_name = "stampapp/home.html"
     context = {}
