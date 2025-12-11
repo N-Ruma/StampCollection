@@ -2,29 +2,57 @@
 {% load static %}
 
 {% block head %}
-<link rel="stylesheet" href="{% static 'css/stamp_detail.css' %}">
+  <script src='{% static "js/script.js" %}'></script>
+  <link rel="stylesheet" href="{% static 'css/stamp_detail.css' %}">
 {% endblock head %}
 
 {% block content %}
 <div class="detail-container">
-
-    <!-- 角丸の大きい画像 -->
+  {% comment %} スタンプ獲得済み {% endcomment %}
+  {% if own_stamp %}
     <div class="detail-image">
-        <img src="{{ stamp.stamp_image.url }}" alt="{{ stamp.name }}">
+      <img src="{{ own_stamp.stamp_image.url }}" alt="{{ own_stamp }}">
     </div>
-
-    <h2 class="detail-title">{{ stamp.name }}</h2>
-
+    <h2 class="detail-title">{{ own_stamp }}</h2>
     <p class="detail-description">
-        {{ stamp.description|default:"このスポットに関する説明が入ります。" }}
+      {{ own_stamp.description|default:"このスポットに関する説明が入ります。" }}
     </p>
-
     <div class="location-info">
-        <p>緯度：{{ stamp.latitude }}</p>
-        <p>経度：{{ stamp.longitude }}</p>
+      <p>緯度：{{ own_stamp.latitude }}</p>
+      <p>経度：{{ own_stamp.longitude }}</p>
     </div>
+  {% comment %} スタンプ未獲得 {% endcomment %}
+  {% elif unknown_stamp %}
+    <form method="POST" action='{% url "judge" %}' enctype="multipart/form-data">
+      {% csrf_token %}
+      <input type="file" name="upload_image" accept="image/png, image/jpeg, image/jpg" required>
+      <input type="hidden" name="stamp" value="{{ unknown_stamp }}">
+      <button type="submit">スタンプを獲得する!</button>
+    </form>
 
-    <a href="{% url 'stamp_list' %}" class="back-link">← スタンプ一覧へ戻る</a>
-
+    <div class="detail-image">
+      <canvas id="canvas_{{ unknown_stamp.id }}"></canvas>
+    </div>
+    <h2 class="detail-title">{{ unknown_stamp }}</h2>
+    <p class="detail-description">
+      {{ unknown_stamp.description|default:"このスポットに関する説明が入ります。" }}
+    </p>
+    <div class="location-info">
+      <p>緯度：{{ unknown_stamp.latitude }}</p>
+      <p>経度：{{ unknown_stamp.longitude }}</p>
+    </div>
+  {% endif %}
 </div>
 {% endblock content %}
+
+{% block redirect %}
+ <div><a href="{% url 'stamp_list' %}" class="back-link">スタンプ一覧へ戻る</a></div>
+{% endblock redirect %}
+
+{% block script %}
+<script>
+  {% if unknown_stamp %}
+    draw_image({{ unknown_stamp.id }}, "{{ unknown_stamp.stamp_image.url }}")
+  {% endif %}
+</script>
+{% endblock script %}

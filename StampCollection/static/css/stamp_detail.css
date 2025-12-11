@@ -29,7 +29,16 @@
 .detail-image img {
     width: 400px;         /* ← ここでサイズ変更できます（320〜360推奨） */
     max-width: 90%;
-    border-radius: 20px;  /* ← 元の角丸をそのまま使用 */
+    border-radius: 10px;
+    object-fit: cover;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    margin: 20px auto;
+}
+
+.detail-image canvas {
+    width: 400px;         /* ← ここでサイズ変更できます（320〜360推奨） */
+    max-width: 90%;
+    border-radius: 10px;
     object-fit: cover;
     box-shadow: 0 0 10px rgba(0,0,0,0.2);
     margin: 20px auto;

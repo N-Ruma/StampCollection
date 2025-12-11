@@ -18,41 +18,28 @@
 
 <h3>人気スポット上位3件</h3>
 <ol class="popular-ranking">
-  {% for pin in popular_stamps %}
+  {% for popular_stamp in popular_stamps %}
     <li>
-      {#<a href="{% url 'stamp_detail' pin.id %}">{{ pin.name }}</a>#}
-
-      <span class="spot-name">{{ pin.name }}</span>
-      （獲得人数: {{ pin.users.count }}）
-
+      <a href="{% url 'stamp_detail' popular_stamp %}">{{ popular_stamp }}</a>
+      <span class="spot-name">{{ popular_stamp }}</span>
+      （獲得人数: {{ popular_stamp.users.count }}）
     </li>
   {% empty %}
     <p>データがありません。</p>
   {% endfor %}
 </ol>
 
-
 <br><br>
 
 <div style="display:flex; justify-content:center; gap:80px;">
-
-{# <a href="{% url 'stamp_list' %}"><img src="{% static 'img/stamp_icon.png' %}" width="120"><div>スタンプ一覧</div></a> #}
-
-
-<div style="text-align:center;">
-  <img src="{% static 'img/stamp_icon.png' %}" width="120">
-  <div>スタンプ一覧</div>
-</div>
-
-
-{# <a href="{% url 'map_all' %}"><img src="{% static 'img/map_icon.png' %}" width="160"><div>全体マップ</div></a> #}
-
-
-<div style="text-align:center;">
-  <img src="{% static 'img/map_icon.png' %}" width="160">
-  <div>全体マップ</div>
-</div>
-  
+  <a href="{% url 'stamp_list' %}">
+    <img src="{% static 'img/stamp_icon.png' %}" width="120">
+    <div>スタンプ一覧</div>
+  </a>
+  <a href="{% url 'map' %}">
+    <img src="{% static 'img/map_icon.png' %}" width="160">
+    <div>全体マップ</div>
+  </a>
 </div>
 
 {% endblock content %}
@@ -69,14 +56,4 @@
     <div><a href="{% url 'login' %}">ログイン</a></div>
     <div><a href="{% url 'register' %}">アカウント作成</a></div>
   {% endif %}
-
-  <!-- FOR DEBUG -->
-  <h2>[DEBUG REDIRECTS]</h2>
-  <div><a href="admin/">admin</a></div>
-  <div><a href="test_js">test_js</a></div>
-  <div><a href="get_stamp">get_stamp</a></div>
-  <div><a href="stamp_list">stamp_list</a></div>
-  <div><a href="map_view">map_view</a></div>
-  <!-- FOR DEBUG -->
-
 {% endblock redirect %}
