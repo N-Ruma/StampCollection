@@ -65,6 +65,7 @@ def stamp_list_view(request):
 
     return render(request, template_name, context)
 
+@login_required
 def map_view(request):
     template_name = "stampapp/map.html"
     context = {}
