@@ -2,7 +2,6 @@ import torch
 from torchvision import models, transforms
 from torchvision.models import ResNet50_Weights
 from PIL import Image
-import io
 
 # 学習済みモデル生成
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
@@ -18,7 +17,7 @@ preprocess = transforms.Compose([
 ])
 '''前処理関数'''
 
-def getFeature(image):
+def get_feature(image):
     '''
     特徴量抽出関数
     
@@ -35,15 +34,15 @@ def judge(base_image_path, compare_image, threshold=0.80):
     判定用関数
     
     :param base_image_path: スタンプに登録されている画像のファイルパス
-    :param compare_image_bin: formから取得した画像のバイナリデータ
+    :param compare_image: formから取得した画像データ
     :param threshold: 判定閾値(default: 0.80)
     :return: True: similarity >= 0.80 | False: similarity < 0.80
     '''
     base_image = Image.open(base_image_path).convert("RGB")
     compare_image = Image.open(compare_image).convert("RGB")
 
-    base_image_feature = getFeature(base_image)
-    compare_image_feature = getFeature(compare_image)
+    base_image_feature = get_feature(base_image)
+    compare_image_feature = get_feature(compare_image)
 
     similarity = cos_sim(base_image_feature, compare_image_feature)
     return similarity >= threshold

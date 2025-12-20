@@ -30,7 +30,7 @@
     {% endfor %}
   {% endif %}
 
-  <form method="POST" enctype="multipart/form-data">
+  <form method="POST" enctype="multipart/form-data" action='{% url "result_add_stamp_pin" %}'>
     {% csrf_token %}
 
     <label for="name">スタンプ名:</label>
