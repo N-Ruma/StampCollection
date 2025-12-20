@@ -3,11 +3,12 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.db.models import Count
 from PIL import Image, ImageFilter, ImageOps
+import io
 
 from .models import *
 from .forms import *
 
-from .judge import judge
+from .judge import *
 
 # 設定されている認証ユーザモデルを取得する.
 User = get_user_model()
@@ -28,17 +29,35 @@ def home_view(request):
 def add_stamp_pin_view(request):
     template_name = "stampapp/add_stamp_pin.html"
     context = {}
-    if request.method == "POST":
-        form = StampPinForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect("home")
-    else:
-        form = StampPinForm()
+
+    form = StampPinForm()
     context["form"] = form
 
     stamps = StampPin.objects.all()
     context["stamps"] = stamps
+
+    return render(request, template_name, context)
+
+def result_add_stamp_pin_view(request):
+    template_name = "stampapp/result_add_stamp_pin.html"
+    context = {}
+    messages = []
+
+    if request.method == "POST":
+        form = StampPinForm(request.POST, request.FILES)
+        if form.is_valid():
+            stamp_image = form.cleaned_data["stamp_image"]
+            exist_stamps = StampPin.objects.all()
+
+            # 類似度[ threshold ]以上のスタンプが存在するかどうか
+            threshold = 0.97
+            if any(list(map(lambda stamp: judge(stamp.stamp_image, stamp_image, threshold), StampPin.objects.all()))):
+                messages.append("類似度の高いスタンプ画像を持つスタンプが既に追加されています.")
+            else:
+                form.save()
+                messages.append("スタンプを追加しました!")
+
+    context["messages"] = messages
     return render(request, template_name, context)
 
 @login_required
@@ -75,7 +94,6 @@ def map_view(request):
     
     return render(request, template_name, context)
 
-THRESHOLD = 0.80 
 @login_required
 def stamp_detail_view(request, stamp):
     template_name = "stampapp/stamp_detail.html"
