@@ -66,3 +66,36 @@ spots.forEach(spot => {
     }
   });
 });
+
+// --- スタンプ追加用（地図クリック） ---
+let addMarker = null;
+
+map.on('click', function (e) {
+  const lat = e.latlng.lat;
+  const lng = e.latlng.lng;
+
+  // すでに仮ピンがあれば削除
+  if (addMarker) {
+    map.removeLayer(addMarker);
+  }
+
+  // 新しいピンを立てる
+  addMarker = L.marker([lat, lng]).addTo(map);
+
+  // hidden input に緯度・経度をセット
+  document.getElementById('latitude').value = lat;
+  document.getElementById('longitude').value = lng;
+
+  // フォームを表示
+  document.getElementById('stamp-form').style.display = 'block';
+});
+
+// --- キャンセルボタン処理 ---
+document.getElementById('cancel-add').addEventListener('click', () => {
+  if (addMarker) {
+    map.removeLayer(addMarker);
+    addMarker = null;
+  }
+  document.getElementById('stamp-form').style.display = 'none';
+});
+
