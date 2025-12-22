@@ -14,6 +14,35 @@
 
 {% block content %}
 
+<!--
+背景画像を追加
+<div class="bg-image"></div>
+
+<style>
+  .bg-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url("{% static 'img/top.jpg' %}"); 
+    background-size: cover;
+    background-position: center;
+    opacity: 0.2;
+    z-index: -1;
+  }
+
+
+  .content-box {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 30px;
+    border-radius: 12px;
+  }
+</style>
+
+<div class="content-box">
+<-->
+
 <hr>
 
 <h3>人気スポット上位3件</h3>
@@ -42,6 +71,7 @@
   </a>
 </div>
 
+</div>
 {% endblock content %}
 
 {% block redirect %}
