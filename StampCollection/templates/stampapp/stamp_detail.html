@@ -3,6 +3,7 @@
 
 {% block head %}
   <script src='{% static "js/script.js" %}'></script>
+  <script src='{% static "js/geolocation.js" %}'></script>
   <link rel="stylesheet" href="{% static 'css/stamp_detail.css' %}">
 {% endblock head %}
 
@@ -27,7 +28,9 @@
       {% csrf_token %}
       <input type="file" name="upload_image" accept="image/png, image/jpeg, image/jpg" required>
       <input type="hidden" name="stamp" value="{{ unknown_stamp }}">
-      <button type="submit">スタンプを獲得する!</button>
+      <input type="hidden" name="current_latitude" id="current_latitude" value="0.0">
+      <input type="hidden" name="current_longitude" id="current_longitude" value="0.0">
+      <button type="submit" onclick="get_current_position()">スタンプを獲得する!</button>
     </form>
 
     <div class="detail-image">

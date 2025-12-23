@@ -22,7 +22,6 @@ const calculate_image_size = (image_width, image_height, canvas_width, canvas_he
 
 const draw_image = (stamp_id, stamp_url) => {
     const canvas = document.getElementById("canvas_" + stamp_id);
-    console.log("canvas_" + stamp_id);
     const ctx = canvas.getContext("2d");
 
     let image = new Image();
