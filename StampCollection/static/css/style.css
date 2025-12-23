@@ -35,3 +35,7 @@
   margin: 10px 0 0;
   padding: 0;
 }
+
+nav .navbar-brand {
+  color: #000 !important;
+}

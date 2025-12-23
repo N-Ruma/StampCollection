@@ -32,7 +32,7 @@
   {% endif %}
   </div>
 
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
     <div class="container-fluid">
       <a class="navbar-brand" href="{% url 'stamp_list' %}">StampCollection</a>
 
@@ -43,12 +43,40 @@
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto align-items-center">
 
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'stamp_list' %}">スタンプ一覧</a>
+          <li class="nav-item me-1">
+            <a class="nav-link p-0" href="{% url 'home' %}">
+              <img src="{% static 'img/home_icon2.png' %}"
+                   alt="ホーム画面"
+                   style="height:32px;">
+            </a>
+          </li>
+          
+          
+          <!-- スタンプ一覧（画像リンク） -->
+          <li class="nav-item me-2">
+            <a class="nav-link p-0" href="{% url 'stamp_list' %}">
+              <img src="{% static 'img/stamp.png' %}"
+                   alt="スタンプ一覧"
+                   style="height:32px;">
+            </a>
           </li>
 
-          <li class="nav-item">
-            <a class="nav-link" href="{% url 'map' %}">マップ</a>
+          <!-- マップ（画像リンク） -->
+          <li class="nav-item me-3">
+            <a class="nav-link p-0" href="{% url 'map' %}">
+              <img src="{% static 'img/mapicon2.png' %}"
+                   alt="マップ"
+                   style="height:32px;">
+            </a>
+          </li>
+
+
+          <li class="nav-item me-4">
+            <a class="nav-link p-0" href="{% url 'mypage' %}">
+              <img src="{% static 'img/user.png' %}"
+                   alt="マイページ"
+                   style="height:32px;">
+            </a>
           </li>
 
           
@@ -61,7 +89,7 @@
               &#x2261;
             </a>
 
-            <ul class="dropdown-menu dropdown-menu-end"
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark"
                 aria-labelledby="navbarHamburger">
               <li><a class="dropdown-item" href="{% url 'stamp_list' %}">スタンプ一覧</a></li>
               <li><a class="dropdown-item" href="{% url 'map' %}">マップ</a></li>

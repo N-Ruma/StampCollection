@@ -24,13 +24,12 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-image: url("{% static 'img/top1.jpg' %}"); 
+    background-image: url("{% static 'img/top1.jpg' %}");
     background-size: cover;
     background-position: center;
     opacity: 0.5;
     z-index: -1;
   }
-
 
   .content-box {
     background-color: rgba(255, 255, 255, 0.85);
@@ -59,16 +58,6 @@
 
 <br><br>
 
-<div style="display:flex; justify-content:center; gap:80px;">
-  <a href="{% url 'stamp_list' %}">
-    <img src="{% static 'img/stamp_icon.png' %}" width="120">
-    <div>スタンプ一覧</div>
-  </a>
-  <a href="{% url 'map' %}">
-    <img src="{% static 'img/map_icon.png' %}" width="160">
-    <div>全体マップ</div>
-  </a>
-</div>
 
 </div>
 {% endblock content %}
