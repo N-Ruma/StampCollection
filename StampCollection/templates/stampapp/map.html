@@ -44,6 +44,8 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 // スタンプのピンを追加し、詳細ページに遷移するための処理(12/9追加)
+//GPS用追加コード↓
+let stampMarkers = [];
 {% for stamp in stamps %}
     // マーカー作成
     let marker_{{ stamp }} = L.marker([{{ stamp.latitude }}, {{ stamp.longitude }}]).addTo(map).bindPopup("<b>{{ stamp }}</b>");
@@ -60,7 +62,78 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     marker_{{ stamp }}.on("mouseout", () => {
       marker_{{ stamp }}.closePopup();
     })
+
+    // ★ ここが重要
+    stampMarkers.push({
+      name: "{{ stamp }}",
+      lat: {{ stamp.latitude }},
+      lng: {{ stamp.longitude }},
+      marker: marker_{{ stamp }}
+    });
 {% endfor %}
+
+//HTTPS または localhost でしか動かない
+//スマホでは「位置情報の許可」が必須
+//ユーザーが拒否すると取得不可
+// ============================
+// ② 距離計算関数（メートル）
+// ============================
+function getDistance(lat1, lng1, lat2, lng2) {
+  const R = 6371e3;
+  const toRad = Math.PI / 180;
+  const dLat = (lat2 - lat1) * toRad;
+  const dLng = (lng2 - lng1) * toRad;
+
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(lat1 * toRad) *
+    Math.cos(lat2 * toRad) *
+    Math.sin(dLng / 2) ** 2;
+
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+// ============================
+// ④ GPS取得＆スタンプ判定
+// ============================
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(
+    function (position) {
+      const userLat = position.coords.latitude;
+      const userLng = position.coords.longitude;
+
+      // 現在地マーカー
+      L.marker([userLat, userLng])
+        .addTo(map)
+        .bindPopup("現在地")
+        .openPopup();
+
+      // 半径50mの円
+      L.circle([userLat, userLng], {
+        radius: 50,
+        color: "blue",
+        fillOpacity: 0.2
+      }).addTo(map);
+
+      map.setView([userLat, userLng], 16);
+
+      // スタンプとの距離判定
+      stampMarkers.forEach(s => {
+        const d = getDistance(userLat, userLng, s.lat, s.lng);
+
+        if (d <= 50) {
+          s.marker.bindPopup(
+            `<b>${s.name}</b><br>スタンプ取得可能！`
+          ).openPopup();
+        }
+      });
+    },
+    function () {
+      alert("位置情報の取得に失敗しました");
+    }
+  );
+} else {
+  alert("このブラウザではGPSが使用できません");
+}
 
 // 地図の中心位置を指定
 map.setView([42.316, 140.99], 14);
