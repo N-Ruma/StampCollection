@@ -4,6 +4,7 @@
 {% block head %}
   <link rel="stylesheet" href="{% static 'css/stamp_list.css' %}">
   <script src='{% static "js/draw.js" %}'></script>
+  <script src='{% static "js/list.js" %}'></script>
 {% endblock head %}
 
 {% block content %}
@@ -33,6 +34,13 @@
     </div>
   {% endfor %}
 </div>
+
+<div class="sort-button-container">
+  <form>
+    <button id="sort-button">昇順</button>
+  </form>
+</div>
+
 {% endblock content %}
 
 {% block redirect %}
