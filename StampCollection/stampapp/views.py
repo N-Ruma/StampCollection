@@ -74,13 +74,8 @@ def stamp_list_view(request):
     template_name = "stampapp/stamp_list.html"
     context = {}
     
-    user = request.user
-
-    own_stamps = StampPin.objects.filter(users=user)
-    context["own_stamps"] = own_stamps
-    
-    unknown_stamps = StampPin.objects.exclude(users=user)
-    context["unknown_stamps"] = unknown_stamps
+    stamps = StampPin.objects.all()
+    context["stamps"] = stamps
 
     return render(request, template_name, context)
 
