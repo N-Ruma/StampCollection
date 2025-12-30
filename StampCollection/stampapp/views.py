@@ -93,6 +93,26 @@ def map_view(request):
     return render(request, template_name, context)
 
 @login_required
+def map_and_list_view(request):
+    template_name = "stampapp/map_with_list.html"
+    context = {}
+
+    user = request.user
+
+    # マップ用（全スタンプ）
+    stamps = StampPin.objects.all()
+    context["stamps"] = stamps
+
+    # 一覧用（取得済み / 未取得）
+    own_stamps = StampPin.objects.filter(users=user)
+    unknown_stamps = StampPin.objects.exclude(users=user)
+    context["own_stamps"] = own_stamps
+    context["unknown_stamps"] = unknown_stamps
+
+    return render(request, template_name, context)
+
+
+@login_required
 def stamp_detail_view(request, stamp):
     template_name = "stampapp/stamp_detail.html"
     context = {}
