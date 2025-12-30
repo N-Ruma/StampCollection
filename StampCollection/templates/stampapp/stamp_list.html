@@ -4,35 +4,39 @@
 {% block head %}
   <link rel="stylesheet" href="{% static 'css/stamp_list.css' %}">
   <script src='{% static "js/draw.js" %}'></script>
+  <script src='{% static "js/list.js" %}'></script>
 {% endblock head %}
 
 {% block content %}
 <h1 class="page-title">スタンプ一覧</h1>
 
 <div class="grid">
-  {% for own_stamp in own_stamps %}
+  {% for stamp in stamps %}
     <div class="cell">
       <div class="stamp-wrapper">
-        <span class="got-badge">GOT</span>
-        <a href="{% url 'stamp_detail' own_stamp %}">
-          <img class="rsquare-img" src="{{ own_stamp.stamp_image.url }}">
-        </a>
+        {% if user in stamp.users.all %}
+          <span class="got-badge">GOT</span>
+          <a href='{% url "stamp_detail" stamp %}'>
+            <img class="rsquare-img" src='{{ stamp.stamp_image.url }}'>
+          </a>
+        {% else %}
+          <span class="unknown-badge">UNKNOWN</span>
+          <a href='{% url "stamp_detail" stamp %}'>
+            <canvas class="rsquare-img" id="canvas_{{ stamp.id }}"></canvas>
+          </a>
+        {% endif %}
+        <div class="stamp-name">{{ stamp }}</div>
       </div>
-      <div class="stamp-name">{{ own_stamp }}</div>
-    </div>
-  {% endfor %}
-  {% for unknown_stamp in unknown_stamps %}
-    <div class="cell">
-      <div class="stamp-wrapper">
-        <span class="unknown_badge">UNKNOWN</span>
-        <a href="{% url 'stamp_detail' unknown_stamp %}">
-          <canvas class="rsquare-img" id="canvas_{{ unknown_stamp.id }}"></canvas>
-        </a>
-      </div>
-      <div class="stamp-name">{{ unknown_stamp }}</div>
     </div>
   {% endfor %}
 </div>
+
+<div class="sort-button-container">
+  <form>
+    <button id="sort-button">昇順</button>
+  </form>
+</div>
+
 {% endblock content %}
 
 {% block redirect %}
@@ -41,8 +45,10 @@
 
 {% block script %}
 <script>
-  {% for unknown_stamp in unknown_stamps %}
-    draw_image({{ unknown_stamp.id  }}, "{{ unknown_stamp.stamp_image.url }}")
+  {% for stamp in stamps %}
+    {% if not user in stamp.users.all %}
+      draw_image({{ stamp.id }}, "{{ stamp.stamp_image.url }}")
+    {% endif %}
   {% endfor %}
 </script>
 {% endblock script %}
