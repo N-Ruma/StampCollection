@@ -70,7 +70,7 @@
 }
 
 /* 未取得テキスト */
-.unknown-badge {
+.unknown_badge {
   position: absolute;
   top: 8px;
   right: 8px;

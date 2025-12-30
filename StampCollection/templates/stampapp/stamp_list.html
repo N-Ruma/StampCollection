@@ -20,7 +20,7 @@
             <img class="rsquare-img" src='{{ stamp.stamp_image.url }}'>
           </a>
         {% else %}
-          <span class="unknown-badge">UNKNOWN</span>
+          <span class="unknown_badge">UNKNOWN</span>
           <a href='{% url "stamp_detail" stamp %}'>
             <canvas class="rsquare-img" id="canvas_{{ stamp.id }}"></canvas>
           </a>

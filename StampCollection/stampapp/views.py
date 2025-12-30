@@ -84,6 +84,9 @@ def map_view(request):
     template_name = "stampapp/map.html"
     context = {}
     
+    form = StampPinForm()
+    context["form"] = form
+
     stamps = StampPin.objects.all()
     context["stamps"] = stamps
     

@@ -6,11 +6,12 @@
 
 /* カードデザイン */
 .stamp-card {
-position: absolute;
+  position: absolute;
+
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);  /* 中央にするポイント */
-
+  
   width: 320px;
   background: white;
   padding: 18px;
