@@ -18,9 +18,10 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 20px;
-  width: 90%;
-  margin: 20px auto;
+  gap: 10px;
+  width: 100%;
+  max-width: 900px;
+  margin: 16px auto;
 }
 
 /* スタンプのセル（カード） */
@@ -79,6 +80,11 @@
   padding: 3px 7px;
   border-radius: 8px;
   font-size: 10px;
+}
+
+.stamp-list {
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 /* スマホ向け調整 */

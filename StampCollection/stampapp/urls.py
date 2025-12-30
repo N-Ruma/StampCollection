@@ -9,6 +9,7 @@ urlpatterns = [
     path("mypage", mypage_view, name="mypage"), 
     path("map", map_view, name="map"),
     path("stamp_list", stamp_list_view, name="stamp_list"),
+    path("map_and_list", map_and_list_view, name="map_and_list"),
     path("stamp/<str:stamp>", stamp_detail_view, name="stamp_detail"),
     path("judge", judge_view, name="judge")
 ]
