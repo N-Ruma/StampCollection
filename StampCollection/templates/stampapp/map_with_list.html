@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+
+<link rel="stylesheet" href="{% static 'css/stamp_list.css' %}">
+
+{% endblock head %}
+
+{% block content %}
+
+<h1 class="page-title">スタンプ一覧とマップ</h1>
+
+<div class="page-container">
+
+  <!-- マップ -->
+  <div class="map-wrapper">
+    <div id="map"></div>
+  </div>
+
+  <!-- スタンプ一覧 -->
+  <div class="stamp-list">
+    <div class="grid">
+
+      {% for own_stamp in own_stamps %}
+      <div class="cell">
+        <span class="got-badge">GOT</span>
+        <a href="{% url 'stamp_detail' own_stamp %}">
+          <img class="rsquare-img" src="{{ own_stamp.stamp_image.url }}">
+        </a>
+        <div class="stamp-name">{{ own_stamp }}</div>
+      </div>
+      {% endfor %}
+
+      {% for unknown_stamp in unknown_stamps %}
+      <div class="cell">
+        <span class="unknown-badge">UNKNOWN</span>
+        <a href="{% url 'stamp_detail' unknown_stamp %}">
+          <canvas class="rsquare-img" id="canvas_{{ unknown_stamp.id }}"></canvas>
+        </a>
+        <div class="stamp-name">{{ unknown_stamp }}</div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+
+</div>
+
+{% endblock content %}
+
+{% block script %}
+<script>
+const map = L.map('map').setView([42.316, 140.99], 14);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+  attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+{% for stamp in stamps %}
+L.marker([{{ stamp.latitude }}, {{ stamp.longitude }}])
+  .addTo(map)
+  .bindPopup("<b>{{ stamp }}</b>")
+  .on("click", () => {
+    window.location.href = "{% url 'stamp_detail' stamp %}";
+  });
+{% endfor %}
+
+/* ★ 再発防止の決定打 */
+requestAnimationFrame(() => {
+  map.invalidateSize();
+});
+
+</script>
+{% endblock script %}
+
+
+{% block redirect %}
+<a href="{% url 'home' %}">ホーム</a>
+{% endblock redirect %}

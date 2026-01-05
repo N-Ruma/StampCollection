@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+{% endblock head %}
+
+{% block title %}
+  <h2>スタンプ追加確認</h2>
+{% endblock title %}
+
+{% block content %}
+{% for message in messages  %}
+<p>{{ message }}</p>
+{% endfor %}
+{% endblock content %}
+
+{% block redirect %}
+<div><a href='{% url "add_stamp_pin" %}'>スタンプ追加画面に戻る</a></div>
+{% endblock redirect %}
+
+{% block script %}
+{% endblock script %}
