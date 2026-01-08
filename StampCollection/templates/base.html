@@ -54,7 +54,7 @@
           
           <!-- スタンプ一覧（画像リンク） -->
           <li class="nav-item me-2">
-            <a class="nav-link p-0" href="{% url 'stamp_list' %}">
+            <a class="nav-link p-0" href="{% url 'map_and_list' %}">
               <img src="{% static 'img/stamp.png' %}"
                    alt="スタンプ一覧"
                    style="height:32px;">
@@ -63,7 +63,7 @@
 
           <!-- マップ（画像リンク） -->
           <li class="nav-item me-3">
-            <a class="nav-link p-0" href="{% url 'map' %}">
+            <a class="nav-link p-0" href="{% url 'map_and_list' %}">
               <img src="{% static 'img/mapicon2.png' %}"
                    alt="マップ"
                    style="height:32px;">
@@ -89,8 +89,8 @@
 
             <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark"
                 aria-labelledby="navbarHamburger">
-              <li><a class="dropdown-item" href="{% url 'stamp_list' %}">スタンプ一覧</a></li>
-              <li><a class="dropdown-item" href="{% url 'map' %}">マップ</a></li>
+              <li><a class="dropdown-item" href="{% url 'map_and_list' %}">スタンプ一覧</a></li>
+              <li><a class="dropdown-item" href="{% url 'map_and_list' %}">マップ</a></li>
               <li><hr class="dropdown-divider"></li>
 
               {% if user.is_authenticated %}
@@ -117,9 +117,6 @@
   {% block redirect %}{% endblock redirect %}
 
   
-  <footer class="bg-dark text-white text-center py-3 mt-auto">
-  フッターにも情報を追加する予定です。
-  </footer>
 
 </body>
 </html>
