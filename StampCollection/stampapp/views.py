@@ -10,6 +10,8 @@ from .forms import *
 
 from .judge import *
 
+from django.db.models import Case,When,Value,IntegerField
+
 # 設定されている認証ユーザモデルを取得する.
 User = get_user_model()
 
@@ -69,42 +71,52 @@ def mypage_view(request):
     context["own_stamps"] = own_stamps
     return render(request, template_name, context)
     
-@login_required
-def stamp_list_view(request):
-    template_name = "stampapp/stamp_list.html"
-    context = {}
-    
-    stamps = StampPin.objects.all()
-    context["stamps"] = stamps
 
-    return render(request, template_name, context)
-
-@login_required
-def map_view(request):
-    template_name = "stampapp/map.html"
-    context = {}
-    
-    stamps = StampPin.objects.all()
-    context["stamps"] = stamps
-    
-    return render(request, template_name, context)
 
 @login_required
 def map_and_list_view(request):
     template_name = "stampapp/map_with_list.html"
-    context = {}
 
     user = request.user
+    s = int(request.GET.get("s", 0))
 
-    # マップ用（全スタンプ）
-    stamps = StampPin.objects.all()
-    context["stamps"] = stamps
+    # --- マップ用（全件・順序不要） ---
+    map_stamps = StampPin.objects.all()
 
-    # 一覧用（取得済み / 未取得）
-    own_stamps = StampPin.objects.filter(users=user)
-    unknown_stamps = StampPin.objects.exclude(users=user)
-    context["own_stamps"] = own_stamps
-    context["unknown_stamps"] = unknown_stamps
+    # --- 一覧用（ソート対象） ---
+    list_stamps = StampPin.objects.all().prefetch_related("users")
+
+    if s == 1:
+        list_stamps = list_stamps.order_by("name")
+
+    elif s == 2:
+        list_stamps = list_stamps.order_by("-name")
+
+    elif s == 3:
+        # 獲得済みを上に
+        list_stamps = list_stamps.annotate(
+            got_order=Case(
+                When(users=user, then=Value(0)),
+                default=Value(1),
+                output_field=IntegerField(),
+            )
+        ).order_by("got_order", "name")
+
+    elif s == 4:
+        # 未獲得を上に
+        list_stamps = list_stamps.annotate(
+            got_order=Case(
+                When(users=user, then=Value(1)),
+                default=Value(0),
+                output_field=IntegerField(),
+            )
+        ).order_by("got_order", "name")
+
+    context = {
+        "stamps": map_stamps, # マップ用
+        "list_stamps": list_stamps, # 一覧用
+        "current_sort": s,
+    }
 
     return render(request, template_name, context)
 
