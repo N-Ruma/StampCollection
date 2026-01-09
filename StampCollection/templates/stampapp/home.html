@@ -58,7 +58,6 @@
 
 <br><br>
 
-
 </div>
 {% endblock content %}
 
@@ -68,7 +67,6 @@
       {% csrf_token %}
       <button>ログアウト</button>
     </form>
-    <div><a href="{% url 'mypage' %}">マイページ</a></div>
     <div><a href="{% url 'add_stamp_pin' %}">マップピンを追加</a></div>
   {% else %}
     <div><a href="{% url 'login' %}">ログイン</a></div>
