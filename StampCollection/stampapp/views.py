@@ -74,8 +74,8 @@ def mypage_view(request):
 
 
 @login_required
-def map_and_list_view(request):
-    template_name = "stampapp/map_and_list.html"
+def stamp_list_view(request):
+    template_name = "stampapp/stamp_list.html"
 
     user = request.user
     s = int(request.GET.get("s", 0))
