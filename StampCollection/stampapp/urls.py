@@ -8,6 +8,7 @@ urlpatterns = [
     path("result_add_stamp_pin", result_add_stamp_pin_view, name="result_add_stamp_pin"),
     path("mypage", mypage_view, name="mypage"),
     path("map_and_list", map_and_list_view, name="map_and_list"),
+    path("map", map_view, name="map"),
     path("stamp/<str:stamp>", stamp_detail_view, name="stamp_detail"),
     path("judge", judge_view, name="judge")
 

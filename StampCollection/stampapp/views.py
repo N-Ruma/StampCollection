@@ -75,7 +75,7 @@ def mypage_view(request):
 
 @login_required
 def map_and_list_view(request):
-    template_name = "stampapp/map_with_list.html"
+    template_name = "stampapp/map_and_list.html"
 
     user = request.user
     s = int(request.GET.get("s", 0))
@@ -119,6 +119,17 @@ def map_and_list_view(request):
     }
 
     return render(request, template_name, context)
+
+@login_required
+def map_view(request):
+    template_name = "stampapp/map.html"
+    context = {}
+    
+    stamps = StampPin.objects.all()
+    context["stamps"] = stamps
+    
+    return render(request, template_name, context)
+
 
 
 @login_required
