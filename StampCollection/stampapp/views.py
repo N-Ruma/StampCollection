@@ -1,16 +1,12 @@
-from django.shortcuts import render, redirect
+from django.db.models import Case,When,Value,IntegerField
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.db.models import Count
-from PIL import Image, ImageFilter, ImageOps
-import io
 
 from .models import *
 from .forms import *
-
 from .judge import *
-
-from django.db.models import Case,When,Value,IntegerField
 
 # 設定されている認証ユーザモデルを取得する.
 User = get_user_model()
@@ -70,8 +66,6 @@ def mypage_view(request):
     own_stamps = StampPin.objects.filter(users=request.user)
     context["own_stamps"] = own_stamps
     return render(request, template_name, context)
-    
-
 
 @login_required
 def stamp_list_view(request):
