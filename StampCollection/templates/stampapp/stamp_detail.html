@@ -27,6 +27,9 @@
       {% csrf_token %}
       <input type="file" name="upload_image" accept="image/png, image/jpeg, image/jpg" required>
       <input type="hidden" name="stamp" value="{{ unknown_stamp }}">
+      <!-- 追加/距離条件追加用コード↓下二つ -->
+      <input type="hidden" name="user_lat" id="user_lat">
+      <input type="hidden" name="user_lng" id="user_lng">
       <button type="submit">スタンプを獲得する!</button>
     </form>
 
@@ -51,8 +54,40 @@
 
 {% block script %}
 <script>
-  {% if unknown_stamp %}
-    draw_image({{ unknown_stamp.id }}, "{{ unknown_stamp.stamp_image.url }}")
-  {% endif %}
+{% if unknown_stamp %}
+
+// 距離条件判定の追加コード/距離計算関数（map.html と同じコード）
+function getDistance(lat1, lng1, lat2, lng2) {
+  const R = 6371e3;
+  const toRad = Math.PI / 180;
+  const dLat = (lat2 - lat1) * toRad;
+  const dLng = (lng2 - lng1) * toRad;
+
+  const a =
+    Math.sin(dLat / 2) ** 2 +
+    Math.cos(lat1 * toRad) *
+    Math.cos(lat2 * toRad) *
+    Math.sin(dLng / 2) ** 2;
+
+  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+}
+
+// 距離条件判定の追加コード/GPS取得 → 距離判定
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(
+    function (position) {
+      document.getElementById("user_lat").value = position.coords.latitude;
+      document.getElementById("user_lng").value = position.coords.longitude;
+    },
+    function () {
+      alert("位置情報の取得に失敗しました");
+    }
+  );
+}
+
+
+draw_image({{ unknown_stamp.id }}, "{{ unknown_stamp.stamp_image.url }}");
+
+{% endif %}
 </script>
 {% endblock script %}

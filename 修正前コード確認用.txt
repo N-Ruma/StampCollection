@@ -1,0 +1,42 @@
+def judge_view(request):
+    template_name = "stampapp/judge.html"
+    context = {}
+
+    user = request.user
+    messages = []
+
+    # POSTリクエストは獲得処理を行いたいとき(スタンプ未獲得時)にのみ発生するはずなので，現段階でのバグ対策は割愛 (2025/12/11)
+    if request.method == "POST":
+        stamp = request.POST["stamp"]
+        unknown_stamp = StampPin.objects.get(name=stamp)
+        upload_image = request.FILES["upload_image"]
+
+        if judge(unknown_stamp.stamp_image, upload_image):
+            unknown_stamp.users.add(user)
+            success_message = f"{unknown_stamp}を獲得しました!"
+            messages.append(success_message)
+            context["stamp"] = unknown_stamp
+        else:
+            failed_message = "スタンプを獲得できませんでした. 別の画像を試してください!"
+            messages.append(failed_message)
+        
+    context["messages"] = messages
+    return render(request, template_name, context)
+
+スタンプ緯度経度
+
+工大研修所前
+緯度：42.380682
+経度：141.034372
+
+室工大V棟
+緯度：42.3803402682944
+経度：141.03402656121492
+
+白鳥大橋
+緯度：42.355885
+経度：140.950719
+
+地球岬
+緯度：42.301046
+経度：141.000757
