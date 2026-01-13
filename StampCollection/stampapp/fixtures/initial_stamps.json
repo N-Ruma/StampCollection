@@ -1,0 +1,22 @@
+[
+  {
+    "model": "stampapp.stamppin",
+    "fields": {
+      "name": "地球岬",
+      "latitude": 42.303213,
+      "longitude": 140.972278,
+      "stamp_image": "stamp_images/chikyumisaki.jfif",
+      "users": []
+    }
+  },
+  {
+    "model": "stampapp.stamppin",
+    "fields": {
+      "name": "白鳥大橋",
+      "latitude": 42.340099,
+      "longitude": 140.994932,
+      "stamp_image": "stamp_images/hakuchobashi.jpg",
+      "users": []
+    }
+  }
+]
