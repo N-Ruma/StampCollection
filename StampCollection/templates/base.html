@@ -18,11 +18,20 @@
 
   <title>StampCollection</title>
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <style>
+    body {
+      min-height: 100vh;
+    }
+    main {
+      flex: 1;
+    }
+  </style>
+
   {% block head %}{% endblock head %}
 </head>
 
-<body class="d-flex flex-column min-vh-100">
-
+<body class="d-flex flex-column">
 
   <div class="bg-info text-dark text-center py-2">
     {% if user.is_authenticated %}
