@@ -137,6 +137,8 @@ def judge_view(request):
             unknown_stamp.users.add(user)
             messages.append(f"{unknown_stamp}を獲得しました！")
             context["stamp"] = unknown_stamp
+            #if dis > 50:
+            # #elif not judge: 例外処理を書いてから、この後取得の文を書くとか(エラー文の場合分け)
         else:
             messages.append(
                 "位置または画像条件を満たしていないため、スタンプを獲得できませんでした。"
