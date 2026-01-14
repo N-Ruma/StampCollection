@@ -1,9 +1,3 @@
-//  const bounds = L.latLngBounds(
-//    [42.25, 140.90], // 南西
-//    [42.38, 141.05]  // 北東
-//  );
-
-// ★ グローバルにする（const / let なし）
 map = L.map('map', {
   minZoom: 13,
   maxZoom: 17,
@@ -14,7 +8,6 @@ map = L.map('map', {
   maxBoundsViscosity: 1.0
 });
 
-// ★ setView / fitBounds は「どちらか一方」だけ
 map.setView([42.316, 140.99], 14);
 
 // --- OpenStreetMapタイルを読み込み ---
