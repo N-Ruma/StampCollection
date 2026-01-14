@@ -1,4 +1,21 @@
-const map = L.map('map').setView([42.3172, 140.9730], 13); // 室蘭中心
+//  const bounds = L.latLngBounds(
+//    [42.25, 140.90], // 南西
+//    [42.38, 141.05]  // 北東
+//  );
+
+// ★ グローバルにする（const / let なし）
+map = L.map('map', {
+  minZoom: 13,
+  maxZoom: 17,
+  maxBounds: [
+    [42.25, 140.90], // 南西
+    [42.39, 141.05]  // 北東
+  ],
+  maxBoundsViscosity: 1.0
+});
+
+// ★ setView / fitBounds は「どちらか一方」だけ
+map.setView([42.316, 140.99], 14);
 
 // --- OpenStreetMapタイルを読み込み ---
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -98,4 +115,3 @@ document.getElementById('cancel-add').addEventListener('click', () => {
   }
   document.getElementById('stamp-form').style.display = 'none';
 });
-
