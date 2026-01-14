@@ -133,17 +133,14 @@ def judge_view(request):
             unknown_stamp.longitude
         )
 
-        if distance <= 50 and judge(unknown_stamp.stamp_image, upload_image):
+        if distance > 50:
+            messages.append("スタンプ設置場所の範囲外です。")
+        elif not judge(unknown_stamp.stamp_image, upload_image):
+            messages.append("画像が一致しませんでした。")
+        else:
             unknown_stamp.users.add(user)
             messages.append(f"{unknown_stamp}を獲得しました！")
             context["stamp"] = unknown_stamp
-            #if dis > 50:
-            # #elif not judge: 例外処理を書いてから、この後取得の文を書くとか(エラー文の場合分け)
-        else:
-            messages.append(
-                "位置または画像条件を満たしていないため、スタンプを獲得できませんでした。"
-                "スタンプ設置場所の近くで再度お試しください。"
-            )
 
     context["messages"] = messages
     return render(request, template_name, context)
