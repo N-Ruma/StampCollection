@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.contrib.postgres.fields import ArrayField
 from uuid import uuid4
 
 User = get_user_model()
@@ -60,3 +61,13 @@ class StampPin(models.Model):
     
     def __str__(self) -> str:
         return self.name
+
+class Bingo(models.Model):
+    user = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE
+    )
+    '''ビンゴを所有しているユーザ'''
+
+    bingo = ArrayField(models.BooleanField(), size=25)
+    '''ビンゴカード情報'''
