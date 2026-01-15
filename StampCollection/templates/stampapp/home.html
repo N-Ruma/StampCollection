@@ -14,6 +14,33 @@
 
 {% block content %}
 
+
+<div class="bg-image"></div>
+
+<style>
+  .bg-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url("{% static 'img/top1.jpg' %}");
+    background-size: cover;
+    background-position: center;
+    opacity: 0.5;
+    z-index: -1;
+  }
+
+  .content-box {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 30px;
+    border-radius: 12px;
+  }
+</style>
+
+<div class="content-box">
+
+
 <hr>
 
 <h3>人気スポット上位3件</h3>
@@ -31,17 +58,7 @@
 
 <br><br>
 
-<div style="display:flex; justify-content:center; gap:80px;">
-  <a href="{% url 'stamp_list' %}">
-    <img src="{% static 'img/stamp_icon.png' %}" width="120">
-    <div>スタンプ一覧</div>
-  </a>
-  <a href="{% url 'map' %}">
-    <img src="{% static 'img/map_icon.png' %}" width="160">
-    <div>全体マップ</div>
-  </a>
 </div>
-
 {% endblock content %}
 
 {% block redirect %}
@@ -50,10 +67,10 @@
       {% csrf_token %}
       <button>ログアウト</button>
     </form>
-    <div><a href="{% url 'mypage' %}">マイページ</a></div>
     <div><a href="{% url 'add_stamp_pin' %}">マップピンを追加</a></div>
   {% else %}
     <div><a href="{% url 'login' %}">ログイン</a></div>
     <div><a href="{% url 'register' %}">アカウント作成</a></div>
   {% endif %}
-{% endblock redirect %}
+
+  {% endblock redirect %}

@@ -18,9 +18,10 @@
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 20px;
-  width: 90%;
-  margin: 20px auto;
+  gap: 10px;
+  width: 100%;
+  max-width: 900px;
+  margin: 16px auto;
 }
 
 /* スタンプのセル（カード） */
@@ -70,7 +71,7 @@
 }
 
 /* 未取得テキスト */
-.unknown_badge {
+.unknown-badge {
   position: absolute;
   top: 8px;
   right: 8px;
@@ -80,6 +81,7 @@
   border-radius: 8px;
   font-size: 10px;
 }
+
 
 /* スマホ向け調整 */
 @media (max-width: 600px) {
@@ -94,3 +96,40 @@
     height: 120px;
   }
 }
+
+/* =========================
+   map + list 重なり対策
+========================= */
+.page-container {
+  display: block;
+}
+
+/* マップの外枠 */
+.map-wrapper {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto 48px;
+  height: 320px;          /* ← 高さはここだけ */
+  position: relative;
+}
+
+/* Leaflet 本体 */
+#map {
+  width: 100%;
+  height: 320px;          /* ← 100% は絶対に使わない */
+}
+
+/* スタンプ一覧 */
+.stamp-list {
+  max-width: 900px;
+  margin: 0 auto;
+  background: white;
+}
+
+/* Leaflet が他を侵食しないための保険 */
+.leaflet-container {
+  position: relative;
+  z-index: 0;
+}
+
+

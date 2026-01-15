@@ -2,13 +2,23 @@
 {% load static %}
 
 {% block head %}
-  <script src='{% static "js/script.js" %}'></script>
+  <script src='{% static "js/draw.js" %}'></script>
+  <!-- Leaflet -->
+  <link rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
   <link rel="stylesheet" href="{% static 'css/stamp_detail.css' %}">
 {% endblock head %}
 
 {% block content %}
 <div class="detail-container">
   {% comment %} スタンプ獲得済み {% endcomment %}
+  
+  <div class="detail-map-wrapper">
+    <div id="detail-map"
+    style="width:100%; height:300px;"></div>
+  </div>
+
   {% if own_stamp %}
     <div class="detail-image">
       <img src="{{ own_stamp.stamp_image.url }}" alt="{{ own_stamp }}">
@@ -17,10 +27,7 @@
     <p class="detail-description">
       {{ own_stamp.description|default:"このスポットに関する説明が入ります。" }}
     </p>
-    <div class="location-info">
-      <p>緯度：{{ own_stamp.latitude }}</p>
-      <p>経度：{{ own_stamp.longitude }}</p>
-    </div>
+
   {% comment %} スタンプ未獲得 {% endcomment %}
   {% elif unknown_stamp %}
     <form method="POST" action='{% url "judge" %}' enctype="multipart/form-data">
@@ -40,11 +47,9 @@
     <p class="detail-description">
       {{ unknown_stamp.description|default:"このスポットに関する説明が入ります。" }}
     </p>
-    <div class="location-info">
-      <p>緯度：{{ unknown_stamp.latitude }}</p>
-      <p>経度：{{ unknown_stamp.longitude }}</p>
-    </div>
+
   {% endif %}
+
 </div>
 {% endblock content %}
 
@@ -89,5 +94,29 @@ if (navigator.geolocation) {
 draw_image({{ unknown_stamp.id }}, "{{ unknown_stamp.stamp_image.url }}");
 
 {% endif %}
+
+  {% if own_stamp %}
+    const lat = {{ own_stamp.latitude }};
+    const lng = {{ own_stamp.longitude }};
+    const name = "{{ own_stamp }}";
+  {% elif unknown_stamp %}
+    const lat = {{ unknown_stamp.latitude }};
+    const lng = {{ unknown_stamp.longitude }};
+    const name = "{{ unknown_stamp }}";
+  {% endif %}
+
+  console.log("lat,lng:", lat, lng);
+
+  const map = L.map('detail-map').setView([lat, lng], 16);
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+  }).addTo(map);
+
+  L.marker([lat, lng]).addTo(map).bindPopup(name).openPopup();
+
+  setTimeout(() => {
+    map.invalidateSize();
+  }, 100);
 </script>
 {% endblock script %}
