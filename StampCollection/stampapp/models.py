@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-from django.contrib.postgres.fields import ArrayField
 from uuid import uuid4
 
 User = get_user_model()
@@ -69,5 +68,29 @@ class Bingo(models.Model):
     )
     '''ビンゴを所有しているユーザ'''
 
-    bingo = ArrayField(models.BooleanField(), size=25)
+    bingo_id0 = models.BooleanField()
+    bingo_id1 = models.BooleanField()
+    bingo_id2 = models.BooleanField()
+    bingo_id3 = models.BooleanField()
+    bingo_id4 = models.BooleanField()
+    bingo_id5 = models.BooleanField()
+    bingo_id6 = models.BooleanField()
+    bingo_id7 = models.BooleanField()
+    bingo_id8 = models.BooleanField()
+    bingo_id9 = models.BooleanField()
+    bingo_id10 = models.BooleanField()
+    bingo_id11 = models.BooleanField()
+    bingo_id12 = models.BooleanField()
+    bingo_id13 = models.BooleanField()
+    bingo_id14 = models.BooleanField()
+    bingo_id15 = models.BooleanField()
+    bingo_id16 = models.BooleanField()
+    bingo_id17 = models.BooleanField()
+    bingo_id18 = models.BooleanField()
+    bingo_id19 = models.BooleanField()
+    bingo_id20 = models.BooleanField()
+    bingo_id21 = models.BooleanField()
+    bingo_id22 = models.BooleanField()
+    bingo_id23 = models.BooleanField()
+    bingo_id24 = models.BooleanField()
     '''ビンゴカード情報'''

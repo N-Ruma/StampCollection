@@ -1,16 +1,18 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/bingo.css' %}">
+<script src='{% static "js/bingo.js" %}'></script>
+{% endblock head %}
+
 {% block title %}
 <h1>マイページ</h1>
 {% endblock title %}
 
 {% block content %}
-
 <h2>獲得スタンプ一覧</h2>
-
 <div style="display: flex; flex-wrap: wrap; gap: 30px;">
-
   {% for own_stamp in own_stamps %}
   <div style="width: 150px; text-align: center;">
       <img src="{{ own_stamp.stamp_image.url }}" 
@@ -20,9 +22,58 @@
   {% empty %}
   <p>まだスタンプを獲得していません。</p>
   {% endfor %}
-
 </div>
-
+<div container-bingo>
+  <table id="bingo" cellspacing="10">
+    <tbody>
+      <tr>
+        <th>B</th>
+        <th>I</th>
+        <th>N</th>
+        <th>G</th>
+        <th>O</th>
+      </tr>
+      <tr>
+        <td id="bi0">0</td>
+        <td id="bi1">1</td>
+        <td id="bi2">2</td>
+        <td id="bi3">3</td>
+        <td id="bi4">4</td>
+      </tr>
+      <tr>
+        <td id="bi5">5</td>
+        <td id="bi6">6</td>
+        <td id="bi7">7</td>
+        <td id="bi8">8</td>
+        <td id="bi9">9</td>
+      </tr>
+      <tr>
+        <td id="bi10">10</td>
+        <td id="bi11">11</td>
+        <td id="bi12">12</td>
+        <td id="bi13">13</td>
+        <td id="bi14">14</td>
+      </tr>
+      <tr>
+        <td id="bi15">15</td>
+        <td id="bi16">16</td>
+        <td id="bi17">17</td>
+        <td id="bi18">18</td>
+        <td id="bi19">19</td>
+      </tr>
+      <tr>
+        <td id="bi20">20</td>
+        <td id="bi21">21</td>
+        <td id="bi22">22</td>
+        <td id="bi23">23</td>
+        <td id="bi24">24</td>
+      </tr>
+    </tbody>
+  </table>
+  <p id="button-create-bingo">
+    <input type="button" value="カード作成" id="bingo-create">
+  </p>
+</div>
 {% endblock content %}
 
 {% block redirect %}
