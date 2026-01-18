@@ -45,7 +45,8 @@
     </div>
     <h2 class="detail-title">{{ unknown_stamp }}</h2>
     <p class="detail-description">
-      {{ unknown_stamp.description|default:"このスポットに関する説明が入ります。" }}
+      {{ stamp.description }}
+      <!-- {{ unknown_stamp.description|default:"このスポットに関する説明が入ります。" }} -->
     </p>
 
   {% endif %}

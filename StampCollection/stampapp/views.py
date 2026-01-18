@@ -144,6 +144,7 @@ def stamp_detail_view(request, stamp):
     context = {}
 
     user = request.user
+    stamp_obj = StampPin.objects.get(name=stamp)
     own_stamp = StampPin.objects.filter(name=stamp, users=user).first()
     unknown_stamp = StampPin.objects.get(name=stamp)
     
@@ -151,6 +152,8 @@ def stamp_detail_view(request, stamp):
         context["own_stamp"] = own_stamp
     else:
         context["unknown_stamp"] = unknown_stamp
+    
+    context["stamp"] = stamp_obj
     
     return render(request, template_name, context)
 
