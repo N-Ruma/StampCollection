@@ -14,10 +14,51 @@
 
 {% block content %}
 
+{% if just_login %}
+<div class="loader" id="loader">
+  <img src="{% static 'img/animation.jpg' %}" alt="loading" class="loading-img">
+
+  <div class="txt">
+    {%if user.is_authenticated %}
+      {{ user.username }} さん，ようこそ!
+    {% else %}
+      ようこそ!
+    {% endif %}
+  </div>
+</div>
+{% endif %}
+
 
 <div class="bg-image"></div>
 
 <style>
+  
+  .loader {
+  position: fixed;
+  inset: 0;
+  background: white;
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loading-img {
+   top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.txt{
+  position: absolute;
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+  text-align: center;
+  top: 55%;
+
+}
   .bg-image {
     position: fixed;
     top: 0;
@@ -37,6 +78,15 @@
     border-radius: 12px;
   }
 </style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+ $(window).on('load', function () {
+      setTimeout(function () {
+        $('#loader').fadeOut(800);
+      }, 3000);
+    });
+</script>
 
 <div class="content-box">
 
