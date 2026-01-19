@@ -3,7 +3,6 @@
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/bingo.css' %}">
-<script src='{% static "js/bingo.js" %}'></script>
 {% endblock head %}
 
 {% block title %}
@@ -34,44 +33,49 @@
         <th>O</th>
       </tr>
       <tr>
-        <td id="bi0">0</td>
-        <td id="bi1">1</td>
-        <td id="bi2">2</td>
-        <td id="bi3">3</td>
-        <td id="bi4">4</td>
+        <td id="bi0" {% if bingo.0 %}class="check"{% endif %}>0</td>
+        <td id="bi1" {% if bingo.1 %}class="check"{% endif %}>1</td>
+        <td id="bi2" {% if bingo.2 %}class="check"{% endif %}>2</td>
+        <td id="bi3" {% if bingo.3 %}class="check"{% endif %}>3</td>
+        <td id="bi4" {% if bingo.4 %}class="check"{% endif %}>4</td>
       </tr>
       <tr>
-        <td id="bi5">5</td>
-        <td id="bi6">6</td>
-        <td id="bi7">7</td>
-        <td id="bi8">8</td>
-        <td id="bi9">9</td>
+        <td id="bi5" {% if bingo.5 %}class="check"{% endif %}>5</td>
+        <td id="bi6" {% if bingo.6 %}class="check"{% endif %}>6</td>
+        <td id="bi7" {% if bingo.7 %}class="check"{% endif %}>7</td>
+        <td id="bi8" {% if bingo.8 %}class="check"{% endif %}>8</td>
+        <td id="bi9" {% if bingo.9 %}class="check"{% endif %}>9</td>
       </tr>
       <tr>
-        <td id="bi10">10</td>
-        <td id="bi11">11</td>
-        <td id="bi12">12</td>
-        <td id="bi13">13</td>
-        <td id="bi14">14</td>
+        <td id="bi10" {% if bingo.10 %}class="check"{% endif %}>10</td>
+        <td id="bi11" {% if bingo.11 %}class="check"{% endif %}>11</td>
+        <td id="bi12" {% if bingo.12 %}class="check"{% endif %}>12</td>
+        <td id="bi13" {% if bingo.13 %}class="check"{% endif %}>13</td>
+        <td id="bi14" {% if bingo.14 %}class="check"{% endif %}>14</td>
       </tr>
       <tr>
-        <td id="bi15">15</td>
-        <td id="bi16">16</td>
-        <td id="bi17">17</td>
-        <td id="bi18">18</td>
-        <td id="bi19">19</td>
+        <td id="bi15" {% if bingo.15 %}class="check"{% endif %}>15</td>
+        <td id="bi16" {% if bingo.16 %}class="check"{% endif %}>16</td>
+        <td id="bi17" {% if bingo.17 %}class="check"{% endif %}>17</td>
+        <td id="bi18" {% if bingo.18 %}class="check"{% endif %}>18</td>
+        <td id="bi19" {% if bingo.19 %}class="check"{% endif %}>19</td>
       </tr>
       <tr>
-        <td id="bi20">20</td>
-        <td id="bi21">21</td>
-        <td id="bi22">22</td>
-        <td id="bi23">23</td>
-        <td id="bi24">24</td>
+        <td id="bi20" {% if bingo.20 %}class="check"{% endif %}>20</td>
+        <td id="bi21" {% if bingo.21 %}class="check"{% endif %}>21</td>
+        <td id="bi22" {% if bingo.22 %}class="check"{% endif %}>22</td>
+        <td id="bi23" {% if bingo.23 %}class="check"{% endif %}>23</td>
+        <td id="bi24" {% if bingo.24 %}class="check"{% endif %}>24</td>
       </tr>
+
     </tbody>
   </table>
-  <p id="button-create-bingo">
-    <input type="button" value="カード作成" id="bingo-create">
+  <p id="button-reset-bingo">
+    <form method="POST" action='{% url "mypage" %}'>
+      {% csrf_token %}
+      <input type="hidden" value="1" name="bingo-reset">
+      <button type="submit" id="bingo-reset">カードリセット</button>
+    </form>
   </p>
 </div>
 {% endblock content %}

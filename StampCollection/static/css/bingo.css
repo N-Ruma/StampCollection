@@ -37,12 +37,6 @@
     background-color: #F0F0F0;
 }
 
-/* 番号をマウスオーバーした時にポインタを指矢印に変更 */
-#bingo td:hover {
-    cursor: pointer;
-    cursor: hand;
-}
-
 /* 作成ボタンのスタイル */
 p#button{
     text-align: center;

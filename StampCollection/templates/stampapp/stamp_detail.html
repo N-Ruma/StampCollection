@@ -64,6 +64,7 @@
     const lat = {{ unknown_stamp.latitude }};
     const lng = {{ unknown_stamp.longitude }};
     const name = "{{ unknown_stamp }}";
+    draw_image({{ unknown_stamp.id }}, "{{ unknown_stamp.stamp_image.url }}");
   {% endif %}
 
   console.log("lat,lng:", lat, lng);

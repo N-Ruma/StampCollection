@@ -10,6 +10,5 @@ urlpatterns = [
     path("stamp_list", stamp_list_view, name="stamp_list"),
     path("map", map_view, name="map"),
     path("stamp/<str:stamp>", stamp_detail_view, name="stamp_detail"),
-    path("judge", judge_view, name="judge")
-
+    path("judge", judge_view, name="judge"),
 ]

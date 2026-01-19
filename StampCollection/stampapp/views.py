@@ -1,8 +1,9 @@
-from django.db.models import Case,When,Value,IntegerField
+from django.db.models import Case, When, Value, IntegerField
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import get_user_model
 from django.db.models import Count
+import random
 
 from .models import *
 from .forms import *
@@ -45,7 +46,6 @@ def result_add_stamp_pin_view(request):
         form = StampPinForm(request.POST, request.FILES)
         if form.is_valid():
             stamp_image = form.cleaned_data["stamp_image"]
-            exist_stamps = StampPin.objects.all()
 
             # 類似度[ threshold ]以上のスタンプが存在するかどうか
             threshold = 0.97
@@ -62,9 +62,22 @@ def result_add_stamp_pin_view(request):
 def mypage_view(request):
     template_name = "stampapp/mypage.html"
     context = {}
+    user = request.user
+
     # 現在ログインしているユーザーが獲得しているスタンプ
-    own_stamps = StampPin.objects.filter(users=request.user)
+    own_stamps = StampPin.objects.filter(users=user)
     context["own_stamps"] = own_stamps
+
+    # ビンゴ
+    bingo, _created = Bingo.objects.get_or_create(user=user)
+    if request.method == "POST":
+        reset_flag = int(request.POST.get("bingo-reset", 0))
+        print(reset_flag)
+        if reset_flag == 1:
+            bingo.reset()
+            bingo.save()
+    context["bingo"] = bingo.get_bingo_data()
+
     return render(request, template_name, context)
 
 @login_required
@@ -82,10 +95,8 @@ def stamp_list_view(request):
 
     if s == 1:
         list_stamps = list_stamps.order_by("name")
-
     elif s == 2:
         list_stamps = list_stamps.order_by("-name")
-
     elif s == 3:
         # 獲得済みを上に
         list_stamps = list_stamps.annotate(
@@ -95,7 +106,6 @@ def stamp_list_view(request):
                 output_field=IntegerField(),
             )
         ).order_by("got_order", "name")
-
     elif s == 4:
         # 未獲得を上に
         list_stamps = list_stamps.annotate(
@@ -124,8 +134,6 @@ def map_view(request):
     
     return render(request, template_name, context)
 
-
-
 @login_required
 def stamp_detail_view(request, stamp):
     template_name = "stampapp/stamp_detail.html"
@@ -148,6 +156,7 @@ def judge_view(request):
 
     user = request.user
     messages = []
+    bingo, _created = Bingo.objects.get_or_create(user=user)
 
     # POSTリクエストは獲得処理を行いたいとき(スタンプ未獲得時)にのみ発生するはずなので，現段階でのバグ対策は割愛 (2025/12/11)
     if request.method == "POST":
@@ -156,13 +165,23 @@ def judge_view(request):
         upload_image = request.FILES["upload_image"]
 
         if judge(unknown_stamp.stamp_image, upload_image):
+            # スタンプ処理
             unknown_stamp.users.add(user)
             success_message = f"{unknown_stamp}を獲得しました!"
             messages.append(success_message)
             context["stamp"] = unknown_stamp
+            
+            # ビンゴ更新
+            target_num = random.randint(0, 24)
+            bingo.change_true(target_num)
+            bingo.save()
+            context["target_num"] = target_num
         else:
             failed_message = "スタンプを獲得できませんでした. 別の画像を試してください!"
             messages.append(failed_message)
+
+    # ビンゴ
+    context["bingo"] = bingo.get_bingo_data()
         
     context["messages"] = messages
     return render(request, template_name, context)
