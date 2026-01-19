@@ -12,6 +12,17 @@ from .judge import *
 # 設定されている認証ユーザモデルを取得する.
 User = get_user_model()
 
+# 距離条件用追加コード,judge_viewで使う
+def calc_distance(lat1, lng1, lat2, lng2):
+    R = 6371000  # 地球半径(m)
+    phi1 = math.radians(lat1)
+    phi2 = math.radians(lat2)
+    dphi = math.radians(lat2 - lat1)
+    dlambda = math.radians(lng2 - lng1)
+
+    a = math.sin(dphi/2)**2 + math.cos(phi1)*math.cos(phi2)*math.sin(dlambda/2)**2
+    return 2 * R * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+
 def home_view(request):
     template_name = "stampapp/home.html"
     context = {}
@@ -140,6 +151,7 @@ def stamp_detail_view(request, stamp):
     context = {}
 
     user = request.user
+    stamp_obj = StampPin.objects.get(name=stamp)
     own_stamp = StampPin.objects.filter(name=stamp, users=user).first()
     unknown_stamp = StampPin.objects.get(name=stamp)
     
@@ -148,27 +160,47 @@ def stamp_detail_view(request, stamp):
     else:
         context["unknown_stamp"] = unknown_stamp
     
+    context["stamp"] = stamp_obj
+    
     return render(request, template_name, context)
 
 def judge_view(request):
     template_name = "stampapp/judge.html"
     context = {}
-
     user = request.user
     messages = []
     bingo, _created = Bingo.objects.get_or_create(user=user)
 
-    # POSTリクエストは獲得処理を行いたいとき(スタンプ未獲得時)にのみ発生するはずなので，現段階でのバグ対策は割愛 (2025/12/11)
     if request.method == "POST":
-        stamp = request.POST["stamp"]
-        unknown_stamp = StampPin.objects.get(name=stamp)
-        upload_image = request.FILES["upload_image"]
+        stamp_name = request.POST.get("stamp")
+        user_lat = request.POST.get("user_lat")
+        user_lng = request.POST.get("user_lng")
+        upload_image = request.FILES.get("upload_image")
 
-        if judge(unknown_stamp.stamp_image, upload_image):
-            # スタンプ処理
+        # 必須データが欠けている場合
+        if not stamp_name or not user_lat or not user_lng or not upload_image:
+            messages.append("必要な情報が取得できませんでした。位置情報を許可してください。")
+            context["messages"] = messages
+            return render(request, template_name, context)
+
+        unknown_stamp = StampPin.objects.get(name=stamp_name)
+
+        user_lat = float(user_lat)
+        user_lng = float(user_lng)
+
+        distance = calc_distance(
+            user_lat, user_lng,
+            unknown_stamp.latitude,
+            unknown_stamp.longitude
+        )
+
+        if distance > 50:
+            messages.append("スタンプ設置場所の範囲外です。")
+        elif not judge(unknown_stamp.stamp_image, upload_image):
+            messages.append("画像が一致しませんでした。")
+        else:
             unknown_stamp.users.add(user)
-            success_message = f"{unknown_stamp}を獲得しました!"
-            messages.append(success_message)
+            messages.append(f"{unknown_stamp}を獲得しました！")
             context["stamp"] = unknown_stamp
             
             # ビンゴ更新
@@ -176,9 +208,6 @@ def judge_view(request):
             bingo.change_true(target_num)
             bingo.save()
             context["target_num"] = target_num
-        else:
-            failed_message = "スタンプを獲得できませんでした. 別の画像を試してください!"
-            messages.append(failed_message)
 
     # ビンゴ
     context["bingo"] = bingo.get_bingo_data()

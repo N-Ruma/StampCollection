@@ -22,6 +22,12 @@ class StampPin(models.Model):
     )
     '''スタンプ名'''
     
+    description = models.TextField(
+        verbose_name="説明",
+        blank=True,
+    )
+    '''スタンプの場所の説明'''
+    
     latitude = models.FloatField(
         verbose_name="latitude",
     )
