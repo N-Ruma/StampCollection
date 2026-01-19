@@ -32,7 +32,12 @@ def home_view(request):
         StampPin.objects.annotate(user_count=Count("users"))
         .order_by("-user_count")[:3]
     )
+    just_login =  (request.session.pop('just_login', False))
+    
     context["popular_stamps"] = popular_stamps
+    context["just_login"] = just_login
+    
+
     return render(request, template_name, context)
 
 
