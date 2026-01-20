@@ -1,4 +1,14 @@
-const map = L.map('map').setView([42.3172, 140.9730], 13); // 室蘭中心
+map = L.map('map', {
+  minZoom: 13,
+  maxZoom: 17,
+  maxBounds: [
+    [42.25, 140.90], // 南西
+    [42.39, 141.05]  // 北東
+  ],
+  maxBoundsViscosity: 1.0
+});
+
+map.setView([42.316, 140.99], 14);
 
 // --- OpenStreetMapタイルを読み込み ---
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -65,4 +75,36 @@ spots.forEach(spot => {
       window.open(spot.url, '_blank'); // 新しいタブで開く
     }
   });
+});
+
+// --- スタンプ追加用（地図クリック） ---
+let addMarker = null;
+
+map.on('click', function (e) {
+  const lat = e.latlng.lat;
+  const lng = e.latlng.lng;
+
+  // すでに仮ピンがあれば削除
+  if (addMarker) {
+    map.removeLayer(addMarker);
+  }
+
+  // 新しいピンを立てる
+  addMarker = L.marker([lat, lng]).addTo(map);
+
+  // hidden input に緯度・経度をセット
+  document.getElementById('latitude').value = lat;
+  document.getElementById('longitude').value = lng;
+
+  // フォームを表示
+  document.getElementById('stamp-form').style.display = 'block';
+});
+
+// --- キャンセルボタン処理 ---
+document.getElementById('cancel-add').addEventListener('click', () => {
+  if (addMarker) {
+    map.removeLayer(addMarker);
+    addMarker = null;
+  }
+  document.getElementById('stamp-form').style.display = 'none';
 });
