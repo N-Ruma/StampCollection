@@ -6,10 +6,10 @@
 
 /* カードデザイン */
 .stamp-card {
-position: absolute;
-  top: 50%;
+position: fixed;
+  top: 100px;
   left: 50%;
-  transform: translate(-50%, -50%);  /* 中央にするポイント */
+  transform: translateX(-50%);  /* 中央にするポイント */
 
   width: 320px;
   background: white;
@@ -18,6 +18,8 @@ position: absolute;
   box-shadow: 0 4px 14px rgba(0,0,0,0.25);
   z-index: 9999;
   font-size: 15px;
+  max-height: calc(100vh - 140px);
+  overflow-y: auto;
 }
 
 .stamp-card h1 {
@@ -39,6 +41,17 @@ position: absolute;
   border: 1px solid #ccc;
   border-radius: 6px;
   margin-top: 4px;
+}
+
+.stamp-card textarea {
+  width: 100%;
+  padding: 6px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  margin-top: 4px;
+  resize: vertical; /* 高さだけ変更可 */
+  box-sizing: border-box;
+  max-height: 150px;
 }
 
 .stamp-card button {
