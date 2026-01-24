@@ -46,6 +46,15 @@ class StampPin(models.Model):
     )
     '''スタンプ画像'''
     
+    default_image = models.CharField(
+    verbose_name="default_stamp_image",
+    max_length=255,
+    blank=True,
+    null=True,
+    help_text="static 配下の画像パス（例: stamp_images/muroran.jpg）"
+    )
+    '''初期スタンプ画像 1/2 追加'''
+    
     users = models.ManyToManyField(
         to=User,
         verbose_name="users_own_stamp",

@@ -21,7 +21,12 @@
 
   {% if own_stamp %}
     <div class="detail-image">
+      {% if own_stamp.stamp_image %}
       <img src="{{ own_stamp.stamp_image.url }}" alt="{{ own_stamp }}">
+      <!--初期スタンプ用条件分岐 1/2 -->
+      {% elif own_stamp.default_image %}
+      <img src="{% static own_stamp.default_image %}" alt="{{ own_stamp }}">
+      {% endif %}
     </div>
     <h2 class="detail-title">{{ own_stamp }}</h2>
     <p class="detail-description">
@@ -41,7 +46,12 @@
     </form>
 
     <div class="detail-image">
+      <!--初期スタンプ用条件分岐 1/2 -->
+      {% if unknown_stamp.default_image %}
+      <img src="{% static unknown_stamp.default_image %}" alt="{{ unknown_stamp }}">
+      {% else %}
       <canvas id="canvas_{{ unknown_stamp.id }}"></canvas>
+      {% endif %}
     </div>
     <h2 class="detail-title">{{ unknown_stamp }}</h2>
     <p class="detail-description">
@@ -91,8 +101,9 @@ if (navigator.geolocation) {
   );
 }
 
-
+{% if unknown_stamp.stamp_image %}
 draw_image({{ unknown_stamp.id }}, "{{ unknown_stamp.stamp_image.url }}");
+{% endif %}
 
 {% endif %}
 
@@ -104,7 +115,6 @@ draw_image({{ unknown_stamp.id }}, "{{ unknown_stamp.stamp_image.url }}");
     const lat = {{ unknown_stamp.latitude }};
     const lng = {{ unknown_stamp.longitude }};
     const name = "{{ unknown_stamp }}";
-    draw_image({{ unknown_stamp.id }}, "{{ unknown_stamp.stamp_image.url }}");
   {% endif %}
 
   console.log("lat,lng:", lat, lng);

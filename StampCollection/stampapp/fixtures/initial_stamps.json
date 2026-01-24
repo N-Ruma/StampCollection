@@ -6,7 +6,7 @@
       "description": "室蘭市の太平洋に面する岬である。",
       "latitude": 42.30226465607048,
       "longitude": 141.00197790132106,
-      "stamp_image": "stamp_images/chikyumisaki.jfif",
+      "default_image": "stamp_images/chikyumisaki.jpg",
       "users": []
     }
   },
@@ -17,7 +17,7 @@
       "description": "室蘭市の国道37号線の橋である。",
       "latitude": 42.35428800069807,
       "longitude": 140.95068628226957,
-      "stamp_image": "stamp_images/hakuchobashi.jpg",
+      "default_image": "stamp_images/hakuchobashi.jpg",
       "users": []
     }
   }
