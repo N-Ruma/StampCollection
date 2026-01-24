@@ -53,7 +53,7 @@ class StampPin(models.Model):
     null=True,
     help_text="static 配下の画像パス（例: stamp_images/muroran.jpg）"
     )
-    '''初期スタンプ画像 1/2 追加'''
+    '''初期スタンプ画像 1/25 追加'''
     
     users = models.ManyToManyField(
         to=User,
