@@ -30,6 +30,7 @@ def home_view(request):
 
     popular_stamps = (
         StampPin.objects.annotate(user_count=Count("users"))
+        .filter(user_count__gt=0)   #user_count が 0 より大きいものだけを取得する ← 追加：0人は除外
         .order_by("-user_count")[:3]
     )
     just_login =  (request.session.pop('just_login', False)) # 追加1/19
