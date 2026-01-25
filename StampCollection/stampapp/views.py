@@ -32,7 +32,7 @@ def home_view(request):
         StampPin.objects.annotate(user_count=Count("users"))
         .order_by("-user_count")[:3]
     )
-    just_login =  (request.session.pop('just_login', False))
+    just_login =  (request.session.pop('just_login', False)) # 追加1/19
     
     context["popular_stamps"] = popular_stamps
     context["just_login"] = just_login
@@ -62,11 +62,11 @@ def result_add_stamp_pin_view(request):
     if request.method == "POST":
         form = StampPinForm(request.POST, request.FILES)
         if form.is_valid():
-            stamp_image = form.cleaned_data["stamp_image"]
+            stamp_image = form.cleaned_data["stamp_image"] #stamp_image 1/21
 
             # 類似度[ threshold ]以上のスタンプが存在するかどうか
             threshold = 0.97
-            if any(list(map(lambda stamp: judge(stamp.stamp_image, stamp_image, threshold), StampPin.objects.all()))):
+            if any(list(map(lambda stamp: judge(stamp.stamp_image, stamp_image, threshold), StampPin.objects.all()))): #stamp_image
                 messages.append("類似度の高いスタンプ画像を持つスタンプが既に追加されています.")
             else:
                 form.save()
@@ -202,7 +202,7 @@ def judge_view(request):
 
         if distance > 50:
             messages.append("スタンプ設置場所の範囲外です。")
-        elif not judge(unknown_stamp.stamp_image, upload_image):
+        elif not judge(unknown_stamp.stamp_image, upload_image): #stamp_image 1/21
             messages.append("画像が一致しませんでした。")
         else:
             unknown_stamp.users.add(user)
