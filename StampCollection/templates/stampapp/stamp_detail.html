@@ -99,8 +99,8 @@ if (navigator.geolocation) {
     }
   );
 }
-//初期スタンプ用条件分岐 1/25
 
+//初期スタンプ用条件分岐 1/25
 {% if unknown_stamp.stamp_image %}
 draw_image({{ unknown_stamp.id }}, "{{ unknown_stamp.stamp_image.url }}");
 {% endif %}
