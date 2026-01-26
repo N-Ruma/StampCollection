@@ -201,7 +201,7 @@ def judge_view(request):
             unknown_stamp.longitude
         )
 
-        if distance > 50:
+        if distance > 500:  #変更1/26
             messages.append("スタンプ設置場所の範囲外です。")
         elif not judge(unknown_stamp.stamp_image, upload_image): #stamp_image 1/21
             messages.append("画像が一致しませんでした。")

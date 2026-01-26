@@ -144,9 +144,9 @@ if (navigator.geolocation) {
         .bindPopup("現在地")
         .openPopup();
 
-      // 半径50mの円
+      // 半径50mの円   1/26 500mに変更
       L.circle([userLat, userLng], {
-        radius: 50,
+        radius: 500,  
         color: "blue",
         fillOpacity: 0.2
       }).addTo(map);

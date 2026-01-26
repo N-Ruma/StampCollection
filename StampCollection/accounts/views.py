@@ -11,6 +11,7 @@ def register_view(request):
         if form.is_valid():
             # ログイン
             login(request, form.save())
+            request.session['just_login'] = True # 追加 1/26
             return redirect("home")
     else:
         form = UserCreationForm()
