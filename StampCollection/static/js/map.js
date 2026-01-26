@@ -2,13 +2,13 @@ map = L.map('map', {
   minZoom: 13,
   maxZoom: 17,
   maxBounds: [
-    [42.25, 140.90], // 南西
-    [42.39, 141.05]  // 北東
+    [42.29, 140.90], // 南西
+    [42.42, 141.05]  // 北東
   ],
   maxBoundsViscosity: 1.0
 });
 
-map.setView([42.316, 140.99], 14);
+map.setView([42.316, 140.99], 16);
 
 // --- OpenStreetMapタイルを読み込み ---
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {

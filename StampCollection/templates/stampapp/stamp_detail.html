@@ -55,8 +55,7 @@
     </div>
     <h2 class="detail-title">{{ unknown_stamp }}</h2>
     <p class="detail-description">
-      {{ stamp.description }}
-      <!-- {{ unknown_stamp.description|default:"このスポットに関する説明が入ります。" }} -->
+      {{ unknown_stamp.description|default:"このスポットに関する説明が入ります。" }} 
     </p>
 
   {% endif %}
@@ -120,7 +119,7 @@ draw_image({{ unknown_stamp.id }}, "{{ unknown_stamp.stamp_image.url }}");
 
   console.log("lat,lng:", lat, lng);
 
-  const map = L.map('detail-map').setView([lat, lng], 16);
+  const map = L.map('detail-map').setView([lat, lng], 16); 
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'

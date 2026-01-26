@@ -45,6 +45,9 @@
     <label for="stamp_image">スタンプ画像:</label>
     {{ form.stamp_image }}
 
+    <label for="description">スタンプの説明</label>
+    {{ form.description}}
+
     <button type="submit">追加</button>
   </form>
 
@@ -55,7 +58,21 @@
 {% block script %}
 <script>
 // マップ作成
-let map = L.map('map');
+//let map = L.map('map');
+
+const bounds = [
+  [42.26, 140.90],
+  [42.40, 141.05]
+];
+
+const map = L.map('map', {
+  minZoom: 13,
+  maxZoom: 17,
+  maxBounds: bounds,
+  maxBoundsViscosity: 1.0
+});
+
+map.fitBounds(bounds);
 
 // タイル
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
