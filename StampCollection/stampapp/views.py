@@ -67,7 +67,8 @@ def result_add_stamp_pin_view(request):
 
             # 類似度[ threshold ]以上のスタンプが存在するかどうか
             threshold = 0.97
-            if any(list(map(lambda stamp: judge(stamp.stamp_image, stamp_image, threshold), StampPin.objects.all()))):
+            if any(list(map(lambda stamp: judge(stamp.stamp_image, stamp_image, threshold), StampPin.objects.filter(stamp_image__isnull=False).exclude(stamp_image="")))):
+                # StampPin.objects.all():を.filter(stamp_image__isnull=False)に修正 1/25
                 messages.append("類似度の高いスタンプ画像を持つスタンプが既に追加されています.")
             else:
                 form.save()
